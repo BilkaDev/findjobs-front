@@ -36,9 +36,14 @@ export const Ads = () => {
 
     return (
         <div className="Ads">
-            <div className="search-bar">
-                <div className="search-bar__filter">
-                    <h2>search</h2>
+            <div className="AdsView">
+                <div className="AdsView__menu">
+                    <form className="search-form">
+                        <input type="text"/>
+                        <button>
+                            <img src="https://img.icons8.com/material-outlined/24/000000/search--v1.png" alt="search-icon"/>
+                        </button>
+                    </form>
                     <h2>sort</h2>
                 </div>
                 <AdsList
