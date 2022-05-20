@@ -4,7 +4,6 @@ import {AdEntity} from 'types'
 import './AdsList.css'
 
 
-
 interface Props {
     items: AdEntity[];
 }
@@ -20,12 +19,12 @@ export const AdsList = (props: Props) => {
     }
 
     return (
-        <ul className="AdsList">
-            {items.map(ad =>
-                <AdItem
-                    key={ad.id}
-                    ad={ad}
-                />)}
-        </ul>
+            <ul className="AdsList">
+                {items.map(ad =>
+                    <AdItem
+                        key={ad.id}
+                        ad={ad}
+                    />)}
+            </ul>
     )
 }

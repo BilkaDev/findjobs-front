@@ -29,7 +29,7 @@ export const Ads = () => {
             technology: 'JS,React',
             lat: 52.0932937,
             lon: 14.3430061,
-        }
+        },
         ]
 
 
