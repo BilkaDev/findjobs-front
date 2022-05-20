@@ -1,0 +1,58 @@
+.AdItem {
+    height: 8rem;
+    width: 100%;
+}
+
+.AdItem a {
+    color: #423E3A;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 1rem;
+    height: 100%;
+
+}
+
+.AdItem a:hover{
+    background: #d2d2d2;
+}
+
+
+
+.AdItem__image {
+    height: 5rem;
+    margin-right: 0.5rem;
+
+}
+
+.AdItem__content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0;
+    height: 90%;
+    width: 100%;
+    font-size: 1.2em;
+}
+.AdItem__info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 70%;
+
+}
+.AdItem__salary{
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    justify-content: space-between;
+
+
+}
+.AdItem__info{
+    display: flex;
+}
+.AdItem__salary h2{
+    color: #49a110;
+}
+

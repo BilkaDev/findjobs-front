@@ -1,0 +1,13 @@
+.AdsList {
+    list-style: none;
+    margin: 0.6rem auto;
+    padding: 0;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+
+
