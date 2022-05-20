@@ -9,6 +9,10 @@ html {
     font-size: 62.5%;
     color: #423E3A;
 }
+body{
+    background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898;
+    background-blend-mode: multiply,multiply;
+}
 .center {
     text-align: center;
     display: flex;
