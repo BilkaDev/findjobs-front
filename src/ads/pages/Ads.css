@@ -1,6 +1,6 @@
 .Ads{
     display: flex;
-    height: 100vh;
+    height: 100%;
 }
 .AdsView {
     width: 100%;
@@ -26,10 +26,7 @@
 
 
 
-body{
-    background: #f2f2f2;
-    font-family: 'Open Sans', sans-serif;
-}
+
 
 .search-form {
     width: 100%;
