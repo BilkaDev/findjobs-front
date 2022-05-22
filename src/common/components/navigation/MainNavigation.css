@@ -38,9 +38,10 @@
 }
 
 @media (min-width: 768px) {
-    .MainNavigation__menu-btn{
+    .MainNavigation__menu-btn {
         display: none;
     }
+
     .MainHeader .MainNavigation__desktop {
         display: block;
     }
