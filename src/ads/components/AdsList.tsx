@@ -1,11 +1,11 @@
 import React from 'react';
 import {AdItem} from "./AdItem";
-import {AdEntity} from 'types'
+import {SimpleAdEntity} from 'types'
 import './AdsList.css'
 
 
 interface Props {
-    items: AdEntity[];
+    items: SimpleAdEntity[];
 }
 
 export const AdsList = (props: Props) => {

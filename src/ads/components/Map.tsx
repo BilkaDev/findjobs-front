@@ -1,5 +1,5 @@
 import React from 'react';
-import {AdEntity} from '../../../../findjobs-back/types/ad-entity';
+import {SimpleAdEntity} from 'types';
 import '../../utils/fix-map-icon';
 import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
 import 'leaflet/dist/leaflet.css'
@@ -7,7 +7,7 @@ import './Map.css'
 
 
 interface Props {
-    ads: AdEntity[];
+    ads: SimpleAdEntity[];
 }
 
 export const Map = (props: Props) => {

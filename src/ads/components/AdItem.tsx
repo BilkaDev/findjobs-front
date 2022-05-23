@@ -1,5 +1,5 @@
 import React from 'react';
-import {AdEntity} from 'types'
+import {SimpleAdEntity} from 'types'
 import {LogoImage} from "../../common/components/UiElement/LogoImage";
 import {Link} from "react-router-dom";
 import {Card} from "../../common/components/UiElement/Card";
@@ -7,7 +7,7 @@ import './AdItem.css'
 
 
 interface Props {
-    ad: AdEntity;
+    ad: SimpleAdEntity;
 }
 
 export const AdItem = (props: Props) => {
