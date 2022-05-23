@@ -18,6 +18,8 @@ export const Ads = () => {
             technology: 'JS,React',
             lat: 52.0932937,
             lon: 14.3430061,
+            creatorId: 'userId',
+
         },
         {
             id: 'adsid2',
@@ -30,6 +32,9 @@ export const Ads = () => {
             technology: 'JS,React',
             lat: 52.3862034,
             lon: 18.6043395,
+            creatorId: 'userId',
+
+
         },
     ]
 

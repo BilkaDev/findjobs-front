@@ -6,6 +6,7 @@ import './AdsList.css'
 
 interface Props {
     items: SimpleAdEntity[];
+    className?: string | undefined;
 }
 
 export const AdsList = (props: Props) => {
@@ -19,7 +20,7 @@ export const AdsList = (props: Props) => {
     }
 
     return (
-            <ul className="AdsList">
+            <ul className={`AdsList ${props.className}`}>
                 {items.map(ad =>
                     <AdItem
                         key={ad.id}
