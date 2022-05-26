@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import {Card} from "../../common/components/UiElement/Card";
 import {LogoImage} from "../../common/components/UiElement/LogoImage";
 
 import './Ad.css'
 import {Button} from "../../common/components/FormElements/Buttons";
+import {Modal} from "../../common/components/UiElement/Modal";
 
 
 const DUMMY_AD = {
@@ -26,6 +27,7 @@ interface Props {
 }
 
 export const Ad = (props: Props) => {
+    const [showConfirmModal, setShowConfirmModal,] = useState(false);
     const {adId} = props
 
     const {
@@ -45,28 +47,49 @@ export const Ad = (props: Props) => {
     //@todo if null return file not find
 
 
-    return (
-        <Card className="Ad">
-            <div className="Ad__image">
-                <LogoImage image={image} name={name}/>
-            </div>
-            <div className="AdItem__content">
-                <div className="AdItem__info">
-                    <h2>Name: {name}</h2>
-                    <h3>{title}</h3>
-                    <p className="address">Address: {address}</p>
-                </div>
-                <div className="AdItem__salary">
-                    <h2>{salaryMin}$ - {salaryMax}$</h2>
-                    <p>Technology: {technology}</p>
-                </div>
-                <div className="Ad__description">
-                    <p>Lorem ipsum dolor siquaLorem elit. Nobis quisquam raorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis quisquam raLorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis quisquam raLorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis quisquam ratione veniam vitae! Accusamus accusantium debitis distinctio, earum magni obcaecati.</p>
-                </div>
-                <Button to={`/places/${id}`}>EDIT</Button>
-                <Button danger>DELETE</Button>
-            </div>
+    function confirmDeleteHandler() {
+        //@todo connect to be delete ad!
+        console.log("DELETE...")
+    }
 
-        </Card>
+    return (
+        <>
+            {showConfirmModal &&
+            <Modal
+                header="Are you sure?"
+                footerClass="place-item__modal-actions"
+                footer={
+                    <>
+                        <Button inverse onClick={()=> setShowConfirmModal(false)}>CANCEL</Button>
+                        <Button danger onClick={confirmDeleteHandler} >DELETE</Button>
+                    </>
+                }
+            ><p>Do you want to proceed and delete this ad? Please note that it can't be undone therafter.</p>
+            </Modal>}
+            <Card className="Ad">
+                <div className="Ad__image">
+                    <LogoImage image={image} name={name}/>
+                </div>
+                <div className="AdItem__content">
+                    <div className="AdItem__info">
+                        <h2>Name: {name}</h2>
+                        <h3>{title}</h3>
+                        <p className="address">Address: {address}</p>
+                    </div>
+                    <div className="AdItem__salary">
+                        <h2>{salaryMin}$ - {salaryMax}$</h2>
+                        <p>Technology: {technology}</p>
+                    </div>
+                    <div className="Ad__description">
+                        <p>Lorem ipsum dolor siquaLorem elit. Nobis quisquam raorem ipsum dolor sit amet, consectetur
+                            adipisicing elit. Nobis quisquam raLorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            Nobis quisquam raLorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis quisquam
+                            ratione veniam vitae! Accusamus accusantium debitis distinctio, earum magni obcaecati.</p>
+                    </div>
+                    <Button to={`/places/${id}`}>EDIT</Button>
+                    <Button danger onClick={()=> setShowConfirmModal(true)}>DELETE</Button>
+                </div>
+            </Card>
+        </>
     )
 }

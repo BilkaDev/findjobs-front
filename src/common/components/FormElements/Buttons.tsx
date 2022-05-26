@@ -10,7 +10,7 @@ interface Props {
     danger?: boolean;
     children: React.ReactNode;
     to?: string;
-    onClick?: (e: any) => {};
+    onClick?: (e: any)=> void;
     disabled?: boolean;
     type?: "button" | "submit" | "reset" | undefined;
 
