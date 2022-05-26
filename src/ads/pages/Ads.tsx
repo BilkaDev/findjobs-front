@@ -3,8 +3,11 @@ import React from 'react';
 import {AdsList} from "../components/AdsList";
 import {Map} from '../components/Map'
 import './Ads.css'
+import {useParams} from "react-router-dom";
+import {Ad} from "../components/Ad";
 
 export const Ads = () => {
+    const {adId : adIdPath} = useParams()
 
     const DUMMY_ADS = [
         {
@@ -51,10 +54,10 @@ export const Ads = () => {
                     </form>
                     <h2>sort</h2>
                 </div>
-                <AdsList
+                {adIdPath ? <Ad adId={adIdPath}/>: <AdsList
                     items={DUMMY_ADS}
-                />
+                />}
             </div>
-            <Map ads={DUMMY_ADS}/>
+            <Map ads={DUMMY_ADS} adId={adIdPath}/>
         </div>)
 }

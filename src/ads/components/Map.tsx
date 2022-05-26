@@ -8,12 +8,16 @@ import './Map.css'
 
 interface Props {
     ads: SimpleAdEntity[];
+    adId: string | undefined;
 }
 
 export const Map = (props: Props) => {
+    const {adId, ads} = props;
     function clickHandler() {
         console.log("setAd")
     }
+
+    const adsNew = adId === undefined ? [...ads] : ads.filter(ad => ad.id === adId);
 
     return (
         <div className="Map">
@@ -21,7 +25,7 @@ export const Map = (props: Props) => {
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
-                {props.ads.map(ad => (
+                {adsNew.map(ad => (
                     <Marker key={ad.id} position={[ad.lat, ad.lon]}>
                         <Popup className="Map__popup">
                             <div onClick={clickHandler}  className="Map__poput--click">

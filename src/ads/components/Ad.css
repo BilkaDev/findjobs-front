@@ -1,0 +1,45 @@
+.Ad{
+    margin: 1.5rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: #000;
+}
+
+.Ad__image{
+    height: 8rem;
+}
+.Ad__image img{
+    object-fit: contain;
+
+}
+.Ad .AdItem__content{
+    padding: 1rem 0;
+    flex-wrap: wrap;
+}
+
+
+.Ad .AdItem__info{
+
+    min-height: 6.5rem;
+    flex-grow: 1;
+    justify-content: space-around;
+
+}
+
+.Ad .AdItem__salary {
+    justify-content:space-around;
+    flex-grow: 1;
+    min-height: 5rem;
+}
+.Ad .AdItem__salary p{
+    font-size: 1.5rem;
+}
+.Ad__description{
+    padding-top: 1rem;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+
+
+}
