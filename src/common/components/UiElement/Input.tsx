@@ -1,6 +1,7 @@
-import React, {ChangeEvent,  useReducer} from 'react';
+import React, {ChangeEvent, useReducer} from 'react';
 
 import "./Input.css"
+import {validate, Validator} from "../../utils/validators";
 
 interface Props {
     label: string;
@@ -9,10 +10,9 @@ interface Props {
     placeholder: string;
     rows?: number;
     required?: boolean;
+    errorText?: string;
+    validators: Validator[];
     min?: string;
-    errorText?:string
-
-
 }
 
 const InputReducer = (state: any, action: any) => {
@@ -21,8 +21,10 @@ const InputReducer = (state: any, action: any) => {
             return {
                 ...state,
                 value: action.value,
-                isValid: true,
+                isValid: validate(action.value, action.validators),
             }
+        case "TOUCH":
+            return {...state,isTouch: true}
         default:
             return state;
     }
@@ -30,23 +32,33 @@ const InputReducer = (state: any, action: any) => {
 
 
 export const Input = (props: Props) => {
-    const [inputState, dispatch] = useReducer(InputReducer, {value: '', isValid: false})
+    const [inputState, dispatch] = useReducer(InputReducer, {value: '', isValid: false, isTouch: false})
 
-    const changeHandler = (e: ChangeEvent<HTMLInputElement>
+    const changeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        dispatch({type: 'CHANGE', value: e.target.value})
+        dispatch({
+            type: 'CHANGE',
+            value: e.target.value,
+            validators: props.validators,
+        })
+    }
+    const touchHandler = () => {
+        dispatch({
+            type: 'TOUCH'
+        })
     }
     const element = props.element === 'input' ? (
         <input
             {...props}
             onChange={(e) => changeHandler(e)}
             value={inputState.value}
+            onBlur={touchHandler}
         />) : (
         <textarea
             rows={props.rows || 3}
-            onChange={() => changeHandler}
+            onChange={(e) => changeHandler(e)}
             value={inputState.value}
-
+            onBlur={touchHandler}
         />);
 
 
@@ -54,7 +66,7 @@ export const Input = (props: Props) => {
         <label className="Input__label">
             {props.label}
             {element}
-            {!inputState.isValid && <p className="Input__error-text">{props.errorText}</p>}
+            {!inputState.isValid && inputState.isTouch &&<p className="Input__error-text">{props.errorText}</p>}
         </label>
     )
 }

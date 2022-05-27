@@ -1,6 +1,6 @@
 import React from 'react';
 import {SimpleAdEntity} from 'types';
-import '../../utils/fix-map-icon';
+import '../../common/utils/fix-map-icon';
 import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
 import 'leaflet/dist/leaflet.css'
 import './Map.css'
