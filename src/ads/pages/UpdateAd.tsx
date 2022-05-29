@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FormEvent, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {Card} from "../../common/components/UiElement/Card";
 import {Button} from "../../common/components/FormElements/Buttons";
@@ -10,6 +10,7 @@ import {
     VALIDATOR_REQUIRE
 } from "../../common/utils/validators";
 import {AdEntity} from 'types'
+import {useForm} from "../../common/hooks/form-hook";
 
 
 const DUMMY_ADS = [
@@ -45,24 +46,111 @@ const DUMMY_ADS = [
         description: "lorem ipsum dolor sit amet, consectetur adip",
 
 
-
-
     },
 ]
 
+
 export const UpdateAd = () => {
+    const [isLoading, setIsLoading,] = useState(true);
     const {adId} = useParams();
 
+
+
+    const [formState, inputHandler, setFormData] = useForm({
+        title: {
+            value: "",
+            isValid: false
+        },
+        address: {
+            value: "",
+            isValid: false
+        },
+        name: {
+            value: "",
+            isValid: false
+        },
+        description: {
+            value: "",
+            isValid: false,
+        },
+        email: {
+            value: "",
+            isValid: false,
+        },
+        "price-min": {
+            value: "",
+            isValid: false
+        },
+        "price-max": {
+            value: "",
+            isValid: false
+        },
+        technology: {
+            value: "",
+            isValid: false
+        },
+    }, false)
+
     const identifiedAd = DUMMY_ADS.filter(ad => ad.id === adId)[0] as AdEntity;
+
+    useEffect(() => {
+        setFormData({
+            title: {
+                value: identifiedAd.title,
+                isValid: true
+            },
+            address: {
+                value: identifiedAd.address,
+                isValid: true
+            },
+            name: {
+                value: identifiedAd.name,
+                isValid: true
+            },
+            description: {
+                value: identifiedAd.description,
+                isValid: true,
+            },
+            email: {
+                value: identifiedAd.email,
+                isValid: true,
+            },
+            "price-min": {
+                value: identifiedAd.salaryMin,
+                isValid: true
+            },
+            "price-max": {
+                value: identifiedAd.salaryMax,
+                isValid: true
+            },
+            technology: {
+                value: identifiedAd.technology,
+                isValid: true
+            },
+        }, true)
+        setIsLoading(false)
+
+    }, [setFormData, identifiedAd])
+
+    function adUpdateSubmitHandler(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+        console.log(formState)
+    }
 
     if (!identifiedAd) {
         return <div className="center" style={{margin: "2rem"}}><Card style={{padding: "1rem"}}><h2>Could not find
             ad</h2></Card></div>
     }
 
+    if (isLoading) {
+        return <div className="center" style={{margin: "2rem"}}><Card style={{padding: "1rem"}}><h2>Loading...</h2></Card></div>
+    }
+
+
+
+
     return (
-        <form onSubmit={() => {
-        }} className="NewAds__form">
+        <form onSubmit={adUpdateSubmitHandler} className="NewAds__form">
             <Input label="Company Name:"
                    id="name"
                    element="input"
@@ -70,9 +158,8 @@ export const UpdateAd = () => {
                    type="text"
                    errorText="Please enter company name"
                    validators={[VALIDATOR_REQUIRE()]}
-                   onInput={() => {
-                   }}
-                   initialValue={identifiedAd.name}
+                   onInput={inputHandler}
+                   initialValue={formState.inputs.name.value}
                    initialValid={true}
             />
             <Input label="Address:"
@@ -82,9 +169,8 @@ export const UpdateAd = () => {
                    type="text"
                    errorText="Please enter a valid address"
                    validators={[VALIDATOR_REQUIRE()]}
-                   onInput={() => {
-                   }}
-                   initialValue={identifiedAd.address}
+                   onInput={inputHandler}
+                   initialValue={formState.inputs.address.value}
                    initialValid={true}
 
             />
@@ -95,10 +181,9 @@ export const UpdateAd = () => {
                    type="text"
                    errorText="Please enter a valid title.(title must be between 3 and 30 characters)"
                    validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(3), VALIDATOR_MAXLENGTH(30)]}
-                   initialValue={identifiedAd.title}
+                   initialValue={formState.inputs.title.value}
                    initialValid={true}
-                   onInput={() => {
-                   }}
+                   onInput={inputHandler}
 
             />
             <Input label="E-mail:"
@@ -108,10 +193,9 @@ export const UpdateAd = () => {
                    type="email"
                    errorText="Please enter a valid e-mail."
                    validators={[VALIDATOR_EMAIL()]}
-                   initialValue={identifiedAd.email}
+                   initialValue={formState.inputs.email.value}
                    initialValid={true}
-                   onInput={() => {
-                   }}
+                   onInput={inputHandler}
 
             />
             <Input label="price min:"
@@ -122,10 +206,9 @@ export const UpdateAd = () => {
                    min="0"
                    errorText="Price is required."
                    validators={[VALIDATOR_MIN(0), VALIDATOR_REQUIRE()]}
-                   initialValue={identifiedAd.salaryMin}
+                   initialValue={formState.inputs["price-min"].value}
                    initialValid={true}
-                   onInput={() => {
-                   }}
+                   onInput={inputHandler}
 
             />
             <Input label="price max:"
@@ -136,10 +219,9 @@ export const UpdateAd = () => {
                    min="0"
                    errorText="Price is required."
                    validators={[VALIDATOR_MIN(0), VALIDATOR_REQUIRE()]}
-                   initialValue={identifiedAd.salaryMax}
+                   initialValue={formState.inputs["price-max"].value}
                    initialValid={true}
-                   onInput={() => {
-                   }}
+                   onInput={inputHandler}
 
             />
             <Input label="Technology:"
@@ -149,10 +231,9 @@ export const UpdateAd = () => {
                    type="text"
                    errorText="Technology is required."
                    validators={[VALIDATOR_REQUIRE()]}
-                   initialValue={identifiedAd.technology}
+                   initialValue={formState.inputs.technology.value}
                    initialValid={true}
-                   onInput={() => {
-                   }}
+                   onInput={inputHandler}
 
             />
             <Input label="Description:"
@@ -162,13 +243,12 @@ export const UpdateAd = () => {
                    type="text"
                    errorText="Description is required."
                    validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(1000)]}
-                   initialValue={identifiedAd.description}
+                   initialValue={formState.inputs.description.value}
                    initialValid={true}
-                   onInput={() => {
-                   }}
+                   onInput={inputHandler}
 
             />
-            <Button>Edit Ad</Button>
+            <Button type="submit" disabled={!formState.isValid}>Edit Ad</Button>
         </form>
     )
 }

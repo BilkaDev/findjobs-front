@@ -1,4 +1,4 @@
-import React, {FormEvent, useCallback, useReducer} from 'react';
+import React, {FormEvent} from 'react';
 import {Input} from "../../common/components/FormElements/Input";
 
 import './NewAds.css'
@@ -10,76 +10,50 @@ import {
     VALIDATOR_MINLENGTH,
     VALIDATOR_REQUIRE
 } from "../../common/utils/validators";
+import {useForm} from "../../common/hooks/form-hook";
 
 
-const formReducer = (state: any, action: any) => {
-    switch (action.type) {
-        case "INPUT_CHANGE":
-            let formIsValid = true;
-            for (const inputId in state.inputs) {
-                if (inputId === action.inputId) {
-                    formIsValid = formIsValid && action.isValid;
-                } else {
-                    formIsValid = formIsValid && state.inputs[inputId].isValid;
-                }
-            }
-            return {
-                ...state,
-                inputs: {
-                    ...state.inputs,
-                    [action.inputId]: {value: action.value, isValid: action.isValid}
-                },
-                isValid: formIsValid
-            }
-        default:
-            return state;
 
-    }
-};
 
 
 export const NewAds = () => {
 
-    const [formState, dispatch] = useReducer(formReducer, {
-        inputs: {
-            title: {
-                value: '',
-                isValid: false
-            },
-            Address: {
-                value: '',
-                isValid: false
-            },
-            name: {
-                value: '',
-                isValid: false
-            },
-            description: {
-                value: '',
-                isValid: false,
-            },
-            email: {
-                value: '',
-                isValid: false,
-            },
-            "price-min": {
-                value: '',
-                isValid: false
-            },
-            "price-max": {
-                value: '',
-                isValid: false
-            },
-            technology: {
-                value: '',
-                isValid: false
-            },
+    const [formState,inputHandler] = useForm({
+        title: {
+            value: '',
+            isValid: false
         },
-        isValid: false,
-    })
-    const inputHandler = useCallback((id: string, value: string, isValid: boolean) => {
-        dispatch({type: 'INPUT_CHANGE',value,isValid,inputId: id})
-    }, [])
+        address: {
+            value: '',
+            isValid: false
+        },
+        name: {
+            value: '',
+            isValid: false
+        },
+        description: {
+            value: '',
+            isValid: false,
+        },
+        email: {
+            value: '',
+            isValid: false,
+        },
+        "price-min": {
+            value: '',
+            isValid: false
+        },
+        "price-max": {
+            value: '',
+            isValid: false
+        },
+        technology: {
+            value: '',
+            isValid: false
+        },
+    },false)
+
+
 
     const adsSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
