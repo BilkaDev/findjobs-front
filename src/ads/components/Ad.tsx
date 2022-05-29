@@ -86,7 +86,7 @@ export const Ad = (props: Props) => {
                             Nobis quisquam raLorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis quisquam
                             ratione veniam vitae! Accusamus accusantium debitis distinctio, earum magni obcaecati.</p>
                     </div>
-                    <Button to={`/places/${id}`}>EDIT</Button>
+                    <Button to={`/edit-ad/${id}`}>EDIT</Button>
                     <Button danger onClick={()=> setShowConfirmModal(true)}>DELETE</Button>
                 </div>
             </Card>

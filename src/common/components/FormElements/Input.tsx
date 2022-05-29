@@ -4,6 +4,8 @@ import "./Input.css"
 import {validate, Validator} from "../../utils/validators";
 
 interface Props {
+    initialValue?: string | number;
+    initialValid?: boolean;
     label: string;
     id: string;
     element: string;
@@ -14,7 +16,7 @@ interface Props {
     errorText?: string;
     validators: Validator[];
     min?: string;
-    onInput?: any;
+    onInput: (id: string, value: string, isValid: boolean) => void;
 }
 
 const InputReducer = (state: any, action: any) => {
@@ -34,7 +36,7 @@ const InputReducer = (state: any, action: any) => {
 
 
 export const Input = (props: Props) => {
-    const [inputState, dispatch] = useReducer(InputReducer, {value: '', isValid: false, isTouch: false})
+    const [inputState, dispatch] = useReducer(InputReducer, {value: props.initialValue || '', isValid: props.initialValid || false, isTouch: false})
 
     const {id, onInput} = props;
     const {value, isValid, isTouch} = inputState;
