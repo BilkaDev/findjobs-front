@@ -1,10 +1,11 @@
-import React, {ChangeEvent, useReducer} from 'react';
+import React, {ChangeEvent, useEffect, useReducer} from 'react';
 
 import "./Input.css"
 import {validate, Validator} from "../../utils/validators";
 
 interface Props {
     label: string;
+    id: string;
     element: string;
     type: string;
     placeholder: string;
@@ -13,6 +14,7 @@ interface Props {
     errorText?: string;
     validators: Validator[];
     min?: string;
+    onInput?: any;
 }
 
 const InputReducer = (state: any, action: any) => {
@@ -24,7 +26,7 @@ const InputReducer = (state: any, action: any) => {
                 isValid: validate(action.value, action.validators),
             }
         case "TOUCH":
-            return {...state,isTouch: true}
+            return {...state, isTouch: true}
         default:
             return state;
     }
@@ -33,6 +35,13 @@ const InputReducer = (state: any, action: any) => {
 
 export const Input = (props: Props) => {
     const [inputState, dispatch] = useReducer(InputReducer, {value: '', isValid: false, isTouch: false})
+
+    const {id, onInput} = props;
+    const {value, isValid, isTouch} = inputState;
+
+    useEffect(() => {
+        onInput(id, value, isValid)
+    }, [id, value, isValid])
 
     const changeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
@@ -49,15 +58,18 @@ export const Input = (props: Props) => {
     }
     const element = props.element === 'input' ? (
         <input
-            {...props}
+            type={props.type}
+            placeholder={props.placeholder}
+            required={props.required}
+            min={props.min}
             onChange={(e) => changeHandler(e)}
-            value={inputState.value}
+            value={value}
             onBlur={touchHandler}
         />) : (
         <textarea
             rows={props.rows || 3}
             onChange={(e) => changeHandler(e)}
-            value={inputState.value}
+            value={value}
             onBlur={touchHandler}
         />);
 
@@ -66,7 +78,7 @@ export const Input = (props: Props) => {
         <label className="Input__label">
             {props.label}
             {element}
-            {!inputState.isValid && inputState.isTouch &&<p className="Input__error-text">{props.errorText}</p>}
+            {!isValid && isTouch && <p className="Input__error-text">{props.errorText}</p>}
         </label>
     )
 }
