@@ -1,28 +1,33 @@
-import React from "react";
+import React, {useContext} from "react";
 
 import {NavLink} from "react-router-dom";
 
 import './NavLinks.css'
+import {AuthContext} from "../../context/AuthContext";
+import {Button} from "../FormElements/Buttons";
 
 interface Props {
 
 }
 
 export const NavLinks = (props: Props) => {
+    const auth = useContext(AuthContext)
 
     return (
         <ul className="NavLinks">
             <li>
                 <NavLink to="/">Find jobs</NavLink>
             </li>
-            <li>
+            {auth.isLoggedIn && <li>
                 <NavLink to="/userId/ads">My ads</NavLink>
-            </li>
-            <li>
+            </li>}
+            {auth.isLoggedIn && <li>
                 <NavLink to="/new">Add ad</NavLink>
-            </li>
+            </li>}
             <li>
-                <NavLink to="/auth">Authenticate</NavLink>
+                {!auth.isLoggedIn ?
+                    <NavLink to="/auth">Authenticate</NavLink> :
+                    <Button inverse onClick={auth.logout}>Logout</Button>}
             </li>
         </ul>
     )

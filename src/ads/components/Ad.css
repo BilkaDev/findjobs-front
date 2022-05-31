@@ -40,6 +40,20 @@
     padding-top: 1rem;
     margin-bottom: 2rem;
     font-size: 1.5rem;
+}
+.map-container {
+    height: 50vh;
+}
+.map-container .Map{
+    display: block;
+    height: 50vh;
+}
 
-
+@media (min-width: 768px){
+    .Ad__show-map{
+        display:none;
+    }
+    .Modal.show-map{
+        display: none;
+    }
 }

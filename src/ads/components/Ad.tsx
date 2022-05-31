@@ -1,10 +1,12 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {Card} from "../../common/components/UiElement/Card";
 import {LogoImage} from "../../common/components/UiElement/LogoImage";
-
-import './Ad.css'
 import {Button} from "../../common/components/FormElements/Buttons";
 import {Modal} from "../../common/components/UiElement/Modal";
+import {Map} from "./Map"
+import {AuthContext} from "../../common/context/AuthContext";
+import { SimpleAdEntity } from "../../../../findjobs-back/types/ad-entity";
+import './Ad.css'
 
 
 const DUMMY_AD = {
@@ -28,7 +30,9 @@ interface Props {
 
 export const Ad = (props: Props) => {
     const [showConfirmModal, setShowConfirmModal,] = useState(false);
+    const [showMap, setShowMap] = useState(false);
     const {adId} = props
+    const auth = useContext(AuthContext)
 
     const {
         id,
@@ -52,12 +56,14 @@ export const Ad = (props: Props) => {
         console.log("DELETE...")
     }
 
+    const openMapHandler = () => setShowMap(true);
+    const closeMapHandler = () => setShowMap(false);
+
     return (
         <>
             {showConfirmModal &&
             <Modal
                 header="Are you sure?"
-                footerClass="place-item__modal-actions"
                 footer={
                     <>
                         <Button inverse onClick={() => setShowConfirmModal(false)}>CANCEL</Button>
@@ -65,6 +71,15 @@ export const Ad = (props: Props) => {
                     </>
                 }
             ><p>Do you want to proceed and delete this ad? Please note that it can't be undone therafter.</p>
+            </Modal>}
+            {showMap && <Modal className="show-map"
+                               onCancel={closeMapHandler}
+                               header={address}
+                               footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
+            >
+                <div className="map-container">
+                    <Map ads={[DUMMY_AD] as SimpleAdEntity[]} adId={adId}/>
+                </div>
             </Modal>}
             <Card className="Ad">
                 <div className="Ad__image">
@@ -86,8 +101,9 @@ export const Ad = (props: Props) => {
                             Nobis quisquam raLorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis quisquam
                             ratione veniam vitae! Accusamus accusantium debitis distinctio, earum magni obcaecati.</p>
                     </div>
-                    <Button to={`/edit-ad/${id}`}>EDIT</Button>
-                    <Button danger onClick={() => setShowConfirmModal(true)}>DELETE</Button>
+                    {auth.isLoggedIn && <Button to={`/edit-ad/${id}`}>EDIT</Button>}
+                    <Button className="Ad__show-map" inverse onClick={openMapHandler}>View on map</Button>
+                    {auth.isLoggedIn && <Button danger onClick={() => setShowConfirmModal(true)}>DELETE</Button>}
                 </div>
             </Card>
         </>

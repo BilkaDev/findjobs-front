@@ -1,9 +1,10 @@
 .Map {
+    height: 100%;
     display: none;
-    width: 50%;
     background-color: green;
     overflow: hidden;
     font-size: 30px;
+
 }
 
 .Map__popup {
@@ -31,3 +32,4 @@
 .leaflet-container {
     height: 100%;
 }
+

@@ -24,20 +24,20 @@ export const Auth = () => {
             isValid: false,
         }
     }, false)
+
     const nav = useNavigate();
 
 
     const authSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-
+        auth.login()
+        nav('/')
     }
     const switchModeHandler = () => {
         if (!isLoginMode) {
             setFormDate({
                 ...formState.inputs,
                 name: undefined,
-                image: undefined,
             }, formState.inputs.email.isValid && formState.inputs.password.isValid)
         } else {
             setFormDate({
@@ -45,10 +45,6 @@ export const Auth = () => {
                 name: {
                     value: "",
                     isValid: false
-                },
-                image: {
-                    value: null,
-                    isValid: false,
                 }
             }, false)
         }
