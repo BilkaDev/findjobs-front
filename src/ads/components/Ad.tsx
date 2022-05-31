@@ -60,8 +60,8 @@ export const Ad = (props: Props) => {
                 footerClass="place-item__modal-actions"
                 footer={
                     <>
-                        <Button inverse onClick={()=> setShowConfirmModal(false)}>CANCEL</Button>
-                        <Button danger onClick={confirmDeleteHandler} >DELETE</Button>
+                        <Button inverse onClick={() => setShowConfirmModal(false)}>CANCEL</Button>
+                        <Button danger onClick={confirmDeleteHandler}>DELETE</Button>
                     </>
                 }
             ><p>Do you want to proceed and delete this ad? Please note that it can't be undone therafter.</p>
@@ -87,7 +87,7 @@ export const Ad = (props: Props) => {
                             ratione veniam vitae! Accusamus accusantium debitis distinctio, earum magni obcaecati.</p>
                     </div>
                     <Button to={`/edit-ad/${id}`}>EDIT</Button>
-                    <Button danger onClick={()=> setShowConfirmModal(true)}>DELETE</Button>
+                    <Button danger onClick={() => setShowConfirmModal(true)}>DELETE</Button>
                 </div>
             </Card>
         </>
