@@ -1,5 +1,4 @@
 import {useCallback, useReducer} from "react";
-import {Simulate} from "react-dom/test-utils";
 
 
 const formReducer = (state: any, action: any) => {
@@ -32,9 +31,9 @@ const formReducer = (state: any, action: any) => {
     }
 };
 
-export const useForm = (initialInputs:any,initialFormValidity : boolean) => {
+export const useForm = (initialInputs: any, initialFormValidity: boolean) => {
     const inputHandler = useCallback((id: string, value: string, isValid: boolean) => {
-        dispatch({type: 'INPUT_CHANGE',value,isValid,inputId: id})
+        dispatch({type: 'INPUT_CHANGE', value, isValid, inputId: id})
     }, [])
 
     const [formState, dispatch] = useReducer(formReducer, {
@@ -42,13 +41,13 @@ export const useForm = (initialInputs:any,initialFormValidity : boolean) => {
         isValid: initialFormValidity,
     })
 
-    const setFormData = useCallback((inputData:any, formValidity:boolean) => {
+    const setFormData = useCallback((inputData: any, formValidity: boolean) => {
         dispatch({
             type: 'SET_DATA',
             inputs: inputData,
             formIsValid: formValidity,
         })
-    },[])
+    }, [])
     return [formState, inputHandler, setFormData]
 
 }

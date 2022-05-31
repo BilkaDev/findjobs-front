@@ -9,9 +9,9 @@ interface Props {
     style?: CSSProperties | undefined;
 }
 
-export const Card = (props: Props)=> {
+export const Card = (props: Props) => {
 
-    return(
+    return (
         <div style={props.style} className={`Card ${props.className}`}>
             {props.children}
         </div>

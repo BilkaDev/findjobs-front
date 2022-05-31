@@ -7,7 +7,7 @@ import {useParams} from "react-router-dom";
 import {Ad} from "../components/Ad";
 
 export const Ads = () => {
-    const {adId : adIdPath} = useParams()
+    const {adId: adIdPath} = useParams()
 
     const DUMMY_ADS = [
         {
@@ -49,12 +49,13 @@ export const Ads = () => {
                     <form className="search-form">
                         <input type="text"/>
                         <button>
-                            <img src="https://img.icons8.com/material-outlined/24/000000/search--v1.png" alt="search-icon"/>
+                            <img src="https://img.icons8.com/material-outlined/24/000000/search--v1.png"
+                                 alt="search-icon"/>
                         </button>
                     </form>
                     <h2>sort</h2>
                 </div>
-                {adIdPath ? <Ad adId={adIdPath}/>: <AdsList
+                {adIdPath ? <Ad adId={adIdPath}/> : <AdsList
                     items={DUMMY_ADS}
                 />}
             </div>
