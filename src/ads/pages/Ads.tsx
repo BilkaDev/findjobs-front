@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FormEvent, useState} from 'react';
 
 import {AdsList} from "../components/AdsList";
 import {Map} from '../components/Map'
@@ -8,6 +8,7 @@ import {Ad} from "../components/Ad";
 
 export const Ads = () => {
     const {adId: adIdPath} = useParams()
+    const [inputValue, setInputValue] = useState('')
 
     const DUMMY_ADS = [
         {
@@ -44,12 +45,22 @@ export const Ads = () => {
     ]
 
 
+    function submitForm(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        // @TODO add fetch to find ads
+        //  this modified a dumy_ads
+    }
+
     return (
         <div className="Ads">
             <div className="AdsView">
                 <div className="AdsView__menu">
-                    <form className="search-form">
-                        <input type="text"/>
+                    <form className="search-form" onSubmit={submitForm}>
+                        <input
+                            type="text"
+                            value={inputValue}
+                            onChange={e => setInputValue(e.target.value)}
+                        />
                         <button>
                             <img src="https://img.icons8.com/material-outlined/24/000000/search--v1.png"
                                  alt="search-icon"/>
