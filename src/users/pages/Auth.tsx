@@ -3,7 +3,12 @@ import {FormEvent, useContext, useState} from "react";
 import {useForm} from "../../common/hooks/form-hook";
 import {Card} from "../../common/components/UiElement/Card";
 import {Input} from "../../common/components/FormElements/Input";
-import {VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE} from "../../common/utils/validators";
+import {
+    VALIDATOR_EMAIL,
+    VALIDATOR_MAXLENGTH,
+    VALIDATOR_MINLENGTH,
+    VALIDATOR_REQUIRE
+} from "../../common/utils/validators";
 import {Button} from "../../common/components/FormElements/Buttons";
 import {AuthContext} from "../../common/context/AuthContext";
 import './Auth.css'
@@ -65,7 +70,7 @@ export const Auth = () => {
                         id="name"
                         type="text"
                         label="Your Name"
-                        validators={[VALIDATOR_REQUIRE()]}
+                        validators={[VALIDATOR_REQUIRE(),VALIDATOR_MAXLENGTH(30)]}
                         errorText="Please enter a name"
                         onInput={inputHandler}
 
@@ -76,7 +81,7 @@ export const Auth = () => {
                         element="input"
                         type="email"
                         label="Email"
-                        validators={[VALIDATOR_EMAIL()]}
+                        validators={[VALIDATOR_EMAIL(),VALIDATOR_MAXLENGTH(100)]}
                         errorText="Please enter a valid email address"
                         onInput={inputHandler}
                     />
@@ -86,8 +91,8 @@ export const Auth = () => {
                         element="input"
                         type="password"
                         label="Password"
-                        validators={[VALIDATOR_MINLENGTH(6)]}
-                        errorText="Please enter a valid password (at least 5 characters)"
+                        validators={[VALIDATOR_MINLENGTH(6),VALIDATOR_MAXLENGTH(25)]}
+                        errorText="Please enter a valid password (at least 6 characters and max 25.)"
                         onInput={inputHandler}
                     />
                     <Button type="submit" disabled={!formState.isValid}>{isLoginMode ? 'LOGIN' : 'SIGNUP'}</Button>

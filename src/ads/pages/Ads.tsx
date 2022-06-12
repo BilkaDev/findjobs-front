@@ -12,6 +12,7 @@ export const Ads = () => {
     const DUMMY_ADS = [
         {
             id: 'adsid1',
+            email: 'test@ex.pl',
             name: 'Firma',
             image: 'https://cdn.pixabay.com/photo/2021/08/11/18/06/paladin-6539115_960_720.png',
             title: 'Junior Javascript, React',
@@ -26,6 +27,7 @@ export const Ads = () => {
         },
         {
             id: 'adsid2',
+            email: 'test@ex.pl',
             name: 'Firma 1',
             image: 'https://cdn.pixabay.com/photo/2021/08/11/18/06/paladin-6539115_960_720.png',
             title: 'Junior Javascript, React',

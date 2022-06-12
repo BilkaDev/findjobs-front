@@ -4,7 +4,7 @@ import {Input} from "../../common/components/FormElements/Input";
 import './NewAds.css'
 import {Button} from "../../common/components/FormElements/Buttons";
 import {
-    VALIDATOR_EMAIL,
+    VALIDATOR_EMAIL, VALIDATOR_MAX,
     VALIDATOR_MAXLENGTH,
     VALIDATOR_MIN,
     VALIDATOR_MINLENGTH,
@@ -68,7 +68,7 @@ export const NewAds = () => {
                    placeholder=""
                    type="text"
                    errorText="Please enter company name"
-                   validators={[VALIDATOR_REQUIRE()]}
+                   validators={[VALIDATOR_REQUIRE(),VALIDATOR_MAXLENGTH(30)]}
                    onInput={inputHandler}
             />
             <Input label="Address:"
@@ -77,7 +77,7 @@ export const NewAds = () => {
                    placeholder=""
                    type="text"
                    errorText="Please enter a valid address"
-                   validators={[VALIDATOR_REQUIRE()]}
+                   validators={[VALIDATOR_REQUIRE(),VALIDATOR_MAXLENGTH(100)]}
                    onInput={inputHandler}
             />
             <Input label="Title:"
@@ -86,7 +86,7 @@ export const NewAds = () => {
                    placeholder=""
                    type="text"
                    errorText="Please enter a valid title.(title must be between 3 and 30 characters)"
-                   validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(3), VALIDATOR_MAXLENGTH(30)]}
+                   validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(3), VALIDATOR_MAXLENGTH(50)]}
                    onInput={inputHandler}
             />
             <Input label="E-mail:"
@@ -95,7 +95,7 @@ export const NewAds = () => {
                    placeholder=""
                    type="email"
                    errorText="Please enter a valid e-mail."
-                   validators={[VALIDATOR_EMAIL()]}
+                   validators={[VALIDATOR_EMAIL(),VALIDATOR_MAXLENGTH(100)]}
                    onInput={inputHandler}
             />
             <Input label="price min:"
@@ -105,7 +105,7 @@ export const NewAds = () => {
                    type="number"
                    min="0"
                    errorText="Price is required."
-                   validators={[VALIDATOR_MIN(0), VALIDATOR_REQUIRE()]}
+                   validators={[VALIDATOR_MIN(0), VALIDATOR_REQUIRE(),VALIDATOR_MAX(9999999)]}
                    onInput={inputHandler}
             />
             <Input label="price max:"
@@ -115,7 +115,7 @@ export const NewAds = () => {
                    type="number"
                    min="0"
                    errorText="Price is required."
-                   validators={[VALIDATOR_MIN(0), VALIDATOR_REQUIRE()]}
+                   validators={[VALIDATOR_MIN(0), VALIDATOR_REQUIRE(),VALIDATOR_MAX(9999999)]}
                    onInput={inputHandler}
             />
             <Input label="Technology:"
@@ -124,7 +124,7 @@ export const NewAds = () => {
                    placeholder=""
                    type="text"
                    errorText="Technology is required."
-                   validators={[VALIDATOR_REQUIRE()]}
+                   validators={[VALIDATOR_REQUIRE(),VALIDATOR_MAXLENGTH(100)]}
                    onInput={inputHandler}
             />
             <Input label="Description:"
