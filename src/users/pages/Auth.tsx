@@ -11,13 +11,17 @@ import {
 } from "../../common/utils/validators";
 import {Button} from "../../common/components/FormElements/Buttons";
 import {AuthContext} from "../../common/context/AuthContext";
-import './Auth.css'
+import './Auth.css';
+import {useHttpClient} from "../../common/hooks/http-hook";
+import {ErrorModal} from "../../common/components/UiElement/ErrorModal";
+import {LoadingSpinner} from "../../common/components/UiElement/LoadingSpinner";
 
 export const Auth = () => {
     const auth = useContext(AuthContext);
+    const {sendRequest, isLoading, error, setError} = useHttpClient();
 
 
-    const [isLoginMode, setIsLoginMode] = useState(true)
+    const [isLoginMode, setIsLoginMode] = useState(true);
 
     const [formState, inputHandler, setFormDate] = useForm({
         email: {
@@ -28,22 +32,47 @@ export const Auth = () => {
             value: "",
             isValid: false,
         }
-    }, false)
-
+    }, false);
     const nav = useNavigate();
 
 
     const authSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        auth.login()
-        nav('/')
-    }
+        if (isLoginMode) {
+            const res = await sendRequest(
+                '/user/login',
+                'POST',
+                {
+                    email: formState.inputs.email.value,
+                    password: formState.inputs.password.value,
+                },
+                {
+                    'Content-Type': 'application/json'
+                }
+            );
+        } else {
+            const res = await sendRequest(
+                '/user/singup',
+                'POST',
+                {
+                    name: formState.inputs.name.value,
+                    email: formState.inputs.email.value,
+                    password: formState.inputs.password.value,
+                },
+                {
+                    'Content-Type': 'application/json'
+                }
+            );
+        }
+        auth.login();
+        nav('/');
+    };
     const switchModeHandler = () => {
         if (!isLoginMode) {
             setFormDate({
                 ...formState.inputs,
                 name: undefined,
-            }, formState.inputs.email.isValid && formState.inputs.password.isValid)
+            }, formState.inputs.email.isValid && formState.inputs.password.isValid);
         } else {
             setFormDate({
                 ...formState.inputs,
@@ -51,15 +80,16 @@ export const Auth = () => {
                     value: "",
                     isValid: false
                 }
-            }, false)
+            }, false);
         }
-        setIsLoginMode(prevMode => !prevMode)
-    }
+        setIsLoginMode(prevMode => !prevMode);
+    };
 
     return (
         <>
-            {/*<ErrorModal error={error} onClear={clearError}/>*/}
+            {error && <ErrorModal error={error} onClick={() => setError(null)}/>}
             <Card className="Auth">
+                {isLoading && <LoadingSpinner asOverlay/>}
                 <h2>Login Required</h2>
                 <hr/>
                 <form onSubmit={authSubmitHandler}>
@@ -70,7 +100,7 @@ export const Auth = () => {
                         id="name"
                         type="text"
                         label="Your Name"
-                        validators={[VALIDATOR_REQUIRE(),VALIDATOR_MAXLENGTH(30)]}
+                        validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(30)]}
                         errorText="Please enter a name"
                         onInput={inputHandler}
 
@@ -81,7 +111,7 @@ export const Auth = () => {
                         element="input"
                         type="email"
                         label="Email"
-                        validators={[VALIDATOR_EMAIL(),VALIDATOR_MAXLENGTH(100)]}
+                        validators={[VALIDATOR_EMAIL(), VALIDATOR_MAXLENGTH(100)]}
                         errorText="Please enter a valid email address"
                         onInput={inputHandler}
                     />
@@ -91,7 +121,7 @@ export const Auth = () => {
                         element="input"
                         type="password"
                         label="Password"
-                        validators={[VALIDATOR_MINLENGTH(6),VALIDATOR_MAXLENGTH(25)]}
+                        validators={[VALIDATOR_MINLENGTH(6), VALIDATOR_MAXLENGTH(25)]}
                         errorText="Please enter a valid password (at least 6 characters and max 25.)"
                         onInput={inputHandler}
                     />
@@ -102,6 +132,6 @@ export const Auth = () => {
 
             </Card>
         </>
-    )
+    );
 
-}
+};
