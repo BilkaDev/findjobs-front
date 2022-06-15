@@ -73,7 +73,6 @@ export const Ad = (props: Props) => {
             ><p>Do you want to proceed and delete this ad? Please note that it can't be undone therafter.</p>
             </Modal>}
             {showMap && <Modal className="show-map"
-                               onCancel={closeMapHandler}
                                header={address}
                                footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
             >

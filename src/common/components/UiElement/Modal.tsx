@@ -5,8 +5,6 @@ import './Modal.css'
 
 interface PropsModalOverlay {
     children: React.ReactNode;
-    onSubmit?: (e: any) => void;
-    onCancel?: (e: any) => void;
     className?: string;
     style?: CSSProperties;
     header: string;

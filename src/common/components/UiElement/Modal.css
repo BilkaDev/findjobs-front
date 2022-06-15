@@ -10,6 +10,7 @@
     border-radius: 8px;
 }
 
+
 .Modal__header {
     width: 100%;
     padding: 1rem 0.5rem;
@@ -33,6 +34,11 @@
 @media (min-width: 768px) {
     .Modal {
         width: 28%;
+    }
+    .ErrorModal {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50%;
     }
 }
 
