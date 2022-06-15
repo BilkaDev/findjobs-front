@@ -1,57 +1,45 @@
-import React, {FormEvent, useState} from 'react';
+import React, {FormEvent, useEffect, useState} from 'react';
 
 import {AdsList} from "../components/AdsList";
-import {Map} from '../components/Map'
-import './Ads.css'
-import {useParams} from "react-router-dom";
+import {Map} from '../components/Map';
+import {useNavigate, useParams} from "react-router-dom";
+import {SimpleAdEntity, AdEntity} from '../../../../findjobs-back/types/ad-entity';
 import {Ad} from "../components/Ad";
+import {useHttpClient} from "../../common/hooks/http-hook";
+import {ErrorModal} from "../../common/components/UiElement/ErrorModal";
+import {LoadingSpinner} from "../../common/components/UiElement/LoadingSpinner";
+import './Ads.css';
 
 export const Ads = () => {
-    const {adId: adIdPath} = useParams()
-    const [inputValue, setInputValue] = useState('')
+    const [loadedAds, setLoadedAds] = useState<SimpleAdEntity[]>([]);
+    const [loadedAd, setLoadedAd] = useState<AdEntity>();
+    const {isLoading, error, sendRequest, clearError} = useHttpClient();
+    const [inputValue, setInputValue] = useState('');
+    const nav = useNavigate();
+    let {adId: adIdPath} = useParams();
+    useEffect(() => {
+        (async () => {
+                if (!adIdPath) {
+                    const loadedAds = await sendRequest('/job/');
+                    setLoadedAds(loadedAds.ads);
+                    setLoadedAd(undefined);
+                }
+            }
+        )();
+    }, [adIdPath]);
 
-    const DUMMY_ADS = [
-        {
-            id: 'adsid1',
-            email: 'test@ex.pl',
-            name: 'Firma',
-            image: 'https://cdn.pixabay.com/photo/2021/08/11/18/06/paladin-6539115_960_720.png',
-            title: 'Junior Javascript, React',
-            address: 'Katowice, mariacka 4',
-            salaryMin: 2000,
-            salaryMax: 3000,
-            technology: 'JS,React',
-            lat: 52.0932937,
-            lon: 14.3430061,
-            creatorId: 'userId',
-
-        },
-        {
-            id: 'adsid2',
-            email: 'test@ex.pl',
-            name: 'Firma 1',
-            image: 'https://cdn.pixabay.com/photo/2021/08/11/18/06/paladin-6539115_960_720.png',
-            title: 'Junior Javascript, React',
-            address: 'Katowice, mariacka 4',
-            salaryMin: 2000,
-            salaryMax: 3000,
-            technology: 'JS,React',
-            lat: 52.3862034,
-            lon: 18.6043395,
-            creatorId: 'userId',
-
-
-        },
-    ]
-
-
-    function submitForm(e: FormEvent<HTMLFormElement>) {
+    async function submitForm(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        // @TODO add fetch to find ads
-        //  this modified a dumy_ads
+        if (inputValue === '') return;
+        nav('/');
+        const loadedAds = await sendRequest(`/job/search/${inputValue}`);
+        setLoadedAds(loadedAds.ads);
+
     }
 
-    return (
+    return (<>
+        {error && <ErrorModal className="ads" error={error} onClick={() => clearError()}/>}
+
         <div className="Ads">
             <div className="AdsView">
                 <div className="AdsView__menu">
@@ -68,10 +56,16 @@ export const Ads = () => {
                     </form>
                     <h2>sort</h2>
                 </div>
-                {adIdPath ? <Ad adId={adIdPath}/> : <AdsList
-                    items={DUMMY_ADS}
+                {isLoading && (
+                    <div className="center">
+                        <LoadingSpinner/>
+                    </div>
+                )}
+                {adIdPath ? <Ad ads={loadedAds} adId={adIdPath} setAd={setLoadedAd}/> : <AdsList
+                    items={loadedAds}
                 />}
             </div>
-            <Map ads={DUMMY_ADS} adId={adIdPath}/>
-        </div>)
-}
+            <Map ads={loadedAds} ad={loadedAd} adId={adIdPath}/>
+        </div>
+    </>);
+};

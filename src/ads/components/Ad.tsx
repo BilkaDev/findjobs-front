@@ -1,38 +1,64 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Card} from "../../common/components/UiElement/Card";
 import {LogoImage} from "../../common/components/UiElement/LogoImage";
 import {Button} from "../../common/components/FormElements/Buttons";
 import {Modal} from "../../common/components/UiElement/Modal";
-import {Map} from "./Map"
+import {Map} from "./Map";
 import {AuthContext} from "../../common/context/AuthContext";
-import { SimpleAdEntity } from "../../../../findjobs-back/types/ad-entity";
-import './Ad.css'
+import {AdEntity, SimpleAdEntity} from "../../../../findjobs-back/types/ad-entity";
+import './Ad.css';
+import {useHttpClient} from "../../common/hooks/http-hook";
+import {ErrorModal} from "../../common/components/UiElement/ErrorModal";
+import {useNavigate} from "react-router-dom";
+import {LoadingSpinner} from "../../common/components/UiElement/LoadingSpinner";
 
-
-const DUMMY_AD = {
-    id: 'adsid1',
-    name: 'Firma',
-    image: 'https://cdn.pixabay.com/photo/2021/08/11/18/06/paladin-6539115_960_720.png',
-    title: 'Junior Javascript, React',
-    address: 'Katowice, mariacka 4',
-    salaryMin: 2000,
-    salaryMax: 3000,
-    technology: 'JS,React',
-    lat: 52.0932937,
-    lon: 14.3430061,
-    creatorId: 'userId',
-
-}
 
 interface Props {
     adId: string;
+    ads: SimpleAdEntity[];
+    setAd: any;
 }
 
 export const Ad = (props: Props) => {
+    const [loadedAd, setLoadedAd] = useState<AdEntity>();
+    const {isLoading, error, sendRequest, clearError} = useHttpClient();
     const [showConfirmModal, setShowConfirmModal,] = useState(false);
     const [showMap, setShowMap] = useState(false);
-    const {adId} = props
-    const auth = useContext(AuthContext)
+    const {adId} = props;
+    const nav = useNavigate();
+
+    const auth = useContext(AuthContext);
+
+    useEffect(() => {
+        (async () => {
+            const loadedAd = await sendRequest(`/job/${adId}`);
+            setLoadedAd(loadedAd.ad);
+            props.setAd(loadedAd.ad as AdEntity);
+        })();
+
+    }, [adId]);
+
+    function confirmDeleteHandler() {
+        //@todo connect to be delete ad!
+        console.log("DELETE...");
+    }
+
+    const openMapHandler = () => setShowMap(true);
+    const closeMapHandler = () => setShowMap(false);
+    if (loadedAd === undefined) {
+        return <>
+            {error && <ErrorModal className="ads" error={error} onClick={() => {
+                clearError();
+                nav('/');
+            }}/>}
+            {isLoading && (
+                <div className="center">
+                    <LoadingSpinner/>
+                </div>
+            )}
+        </>;
+    }
+
 
     const {
         id,
@@ -46,38 +72,27 @@ export const Ad = (props: Props) => {
         lat,
         lon,
         creatorId,
-    } = DUMMY_AD
-
-    //@todo if null return file not find
-
-
-    function confirmDeleteHandler() {
-        //@todo connect to be delete ad!
-        console.log("DELETE...")
-    }
-
-    const openMapHandler = () => setShowMap(true);
-    const closeMapHandler = () => setShowMap(false);
-
+    } = loadedAd;
     return (
         <>
+            {error && <ErrorModal className="ads" error={error} onClick={() => clearError()}/>}
             {showConfirmModal &&
-            <Modal
-                header="Are you sure?"
-                footer={
-                    <>
-                        <Button inverse onClick={() => setShowConfirmModal(false)}>CANCEL</Button>
-                        <Button danger onClick={confirmDeleteHandler}>DELETE</Button>
-                    </>
-                }
-            ><p>Do you want to proceed and delete this ad? Please note that it can't be undone therafter.</p>
-            </Modal>}
+                <Modal
+                    header="Are you sure?"
+                    footer={
+                        <>
+                            <Button inverse onClick={() => setShowConfirmModal(false)}>CANCEL</Button>
+                            <Button danger onClick={confirmDeleteHandler}>DELETE</Button>
+                        </>
+                    }
+                ><p>Do you want to proceed and delete this ad? Please note that it can't be undone therafter.</p>
+                </Modal>}
             {showMap && <Modal className="show-map"
                                header={address}
                                footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
             >
                 <div className="map-container">
-                    <Map ads={[DUMMY_AD] as SimpleAdEntity[]} adId={adId}/>
+                    <Map ads={props.ads} ad={loadedAd} adId={adId}/>
                 </div>
             </Modal>}
             <Card className="Ad">
@@ -106,5 +121,5 @@ export const Ad = (props: Props) => {
                 </div>
             </Card>
         </>
-    )
-}
+    );
+};

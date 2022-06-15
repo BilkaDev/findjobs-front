@@ -12,6 +12,7 @@
 }
 .AdsView__menu {
     display: flex;
+    margin-bottom: 1rem;
     padding: 1rem 1rem;
     width: 100%;
     height: 5rem;
