@@ -40,5 +40,10 @@
         transform: translateX(-50%);
         width: 50%;
     }
+    .ErrorModal.ads{
+        width: 28%;
+        left: 10%;
+        transform: translateX(0);
+    }
 }
 

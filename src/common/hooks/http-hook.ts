@@ -1,6 +1,5 @@
 import {useCallback, useEffect, useRef, useState} from "react";
-import {LoginUserEntity, UserEntity} from 'types'
-
+import {LoginUserEntity, UserEntity} from 'types';
 
 
 export const useHttpClient = () => {
@@ -8,11 +7,12 @@ export const useHttpClient = () => {
     const [error, setError] = useState<null | string>();
 
 
+    let statusError = 500;
     const sendRequest = useCallback(
         async (
             url: string,
             method = 'GET',
-            body:  Omit<UserEntity,'id'>| LoginUserEntity | null = null,
+            body: Omit<UserEntity, 'id'> | LoginUserEntity | null = null,
             headers = {}
         ) => {
             try {
@@ -25,13 +25,15 @@ export const useHttpClient = () => {
 
                 const responseData = await response.json();
                 if (!response.ok) {
+                    statusError = responseData;
                     throw new Error(responseData.message);
                 }
                 setIsLoading(false);
 
                 return responseData;
-            } catch (e:any) {
-                setError(e.message );
+            } catch (e: any) {
+                console.log(e);
+                setError(statusError === 500 ? 'Sorry, please try again later' : e.message);
                 setIsLoading(false);
 
                 throw e;

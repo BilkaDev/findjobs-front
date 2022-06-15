@@ -3,7 +3,7 @@ import React from 'react';
 import './LoadingSpinner.css';
 
 interface Props {
-    asOverlay: boolean;
+    asOverlay?: boolean;
 }
 
 export const LoadingSpinner = (props: Props) => {
