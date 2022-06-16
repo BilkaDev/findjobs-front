@@ -1,4 +1,12 @@
-import React, {createContext} from 'react'
+import React, {createContext} from 'react';
+
+interface AuthContextType {
+    userId: string | null;
+    setUserId: (userId: string) => void;
+    isLoggedIn: boolean;
+    login: () => void;
+    logout: () => void;
+}
 
 export const AuthContext = createContext(
     {
@@ -7,7 +15,9 @@ export const AuthContext = createContext(
         // token: null,
         login: () => {
         },
+        setUserId: () => {
+        },
         logout: () => {
         }
-    });
+    } as AuthContextType);
 

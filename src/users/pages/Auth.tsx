@@ -11,10 +11,11 @@ import {
 } from "../../common/utils/validators";
 import {Button} from "../../common/components/FormElements/Buttons";
 import {AuthContext} from "../../common/context/AuthContext";
-import './Auth.css';
 import {useHttpClient} from "../../common/hooks/http-hook";
 import {ErrorModal} from "../../common/components/UiElement/ErrorModal";
 import {LoadingSpinner} from "../../common/components/UiElement/LoadingSpinner";
+import './Auth.css';
+
 
 export const Auth = () => {
     const auth = useContext(AuthContext);
@@ -50,6 +51,9 @@ export const Auth = () => {
                     'Content-Type': 'application/json'
                 }
             );
+            auth.setUserId(res.id)
+
+
         } else {
             const res = await sendRequest(
                 '/user/singup',
@@ -63,6 +67,7 @@ export const Auth = () => {
                     'Content-Type': 'application/json'
                 }
             );
+            auth.setUserId(res.user.id)
         }
         auth.login();
         nav('/');
