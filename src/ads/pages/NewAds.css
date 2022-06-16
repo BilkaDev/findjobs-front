@@ -8,3 +8,11 @@
     background-color: #fff;
 
 }
+
+.result-info{
+    padding: 1rem 2rem;
+}
+.result-info p{
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}

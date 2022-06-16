@@ -1,7 +1,5 @@
-import React, {FormEvent} from 'react';
+import React, {FormEvent, useContext, useState} from 'react';
 import {Input} from "../../common/components/FormElements/Input";
-
-import './NewAds.css'
 import {Button} from "../../common/components/FormElements/Buttons";
 import {
     VALIDATOR_EMAIL, VALIDATOR_MAX,
@@ -11,14 +9,22 @@ import {
     VALIDATOR_REQUIRE
 } from "../../common/utils/validators";
 import {useForm} from "../../common/hooks/form-hook";
-
-
-
-
+import {useHttpClient} from "../../common/hooks/http-hook";
+import {AdEntity} from '../../../../findjobs-back/types/ad-entity';
+import {ErrorModal} from "../../common/components/UiElement/ErrorModal";
+import {LoadingSpinner} from "../../common/components/UiElement/LoadingSpinner";
+import {Card} from "../../common/components/UiElement/Card";
+import {geocode} from "../../common/utils/geocoding";
+import {AuthContext} from "../../common/context/AuthContext";
+import './NewAds.css';
 
 export const NewAds = () => {
 
-    const [formState,inputHandler] = useForm({
+    const {sendRequest, isLoading, error, setError} = useHttpClient();
+    const [resultInfo, setResultInfo] = useState<string | null>(null);
+    const auth = useContext(AuthContext);
+
+    const [formState, inputHandler] = useForm({
         title: {
             value: '',
             isValid: false
@@ -51,16 +57,56 @@ export const NewAds = () => {
             value: '',
             isValid: false
         },
-    },false)
+    }, false);
 
+    const adsSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const geoRes = await geocode(formState.inputs.address.value);
+        if (!geoRes.resStatus) {
+            setError(geoRes.resMessage);
+        } else {
+            const {lat, lon} = geoRes;
+            const newAd: Omit<AdEntity, 'id'> = {
+                name: formState.inputs.name.value,
+                title: formState.inputs.title.value,
+                address: formState.inputs.address.value,
+                creatorId: auth.userId as string,
+                description: formState.inputs.description.value,
+                email: formState.inputs.email.value,
+                salaryMin: Number(formState.inputs["price-min"].value),
+                salaryMax: Number(formState.inputs["price-max"].value),
+                technology: formState.inputs.technology.value,
+                //@todo change image url!
+                image: "https://cdn.pixabay.com/photo/2016/12/21/15/48/bitcoin-1923206_960_720.png",
+                lat,
+                lon,
 
+            };
 
-    const adsSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+            const res = await sendRequest(
+                '/job',
+                'POST',
+                newAd,
+                {
+                    'Content-Type': 'application/json'
+                }
+            );
+            setResultInfo(`${res.newAd.name} added with ID ${res.newAd.id}.`);
+        }
+    };
 
+    if (resultInfo !== null) {
+        return (
+            <div className="center margin">
+                <Card className="result-info">
+                    <p>{resultInfo}</p>
+                    <Button onClick={() => setResultInfo(null)}>Add another one</Button>
+                </Card>
+            </div>);
     }
-
-    return (
+    return (<>
+        {error && <ErrorModal error={error} onClick={() => setError(null)}/>}
+        {isLoading && <LoadingSpinner asOverlay/>}
         <form onSubmit={adsSubmitHandler} className="NewAds__form">
             <Input label="Company Name:"
                    id="name"
@@ -68,7 +114,7 @@ export const NewAds = () => {
                    placeholder=""
                    type="text"
                    errorText="Please enter company name"
-                   validators={[VALIDATOR_REQUIRE(),VALIDATOR_MAXLENGTH(30)]}
+                   validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(30)]}
                    onInput={inputHandler}
             />
             <Input label="Address:"
@@ -77,7 +123,7 @@ export const NewAds = () => {
                    placeholder=""
                    type="text"
                    errorText="Please enter a valid address"
-                   validators={[VALIDATOR_REQUIRE(),VALIDATOR_MAXLENGTH(100)]}
+                   validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(100)]}
                    onInput={inputHandler}
             />
             <Input label="Title:"
@@ -95,7 +141,7 @@ export const NewAds = () => {
                    placeholder=""
                    type="email"
                    errorText="Please enter a valid e-mail."
-                   validators={[VALIDATOR_EMAIL(),VALIDATOR_MAXLENGTH(100)]}
+                   validators={[VALIDATOR_EMAIL(), VALIDATOR_MAXLENGTH(100)]}
                    onInput={inputHandler}
             />
             <Input label="price min:"
@@ -105,7 +151,7 @@ export const NewAds = () => {
                    type="number"
                    min="0"
                    errorText="Price is required."
-                   validators={[VALIDATOR_MIN(0), VALIDATOR_REQUIRE(),VALIDATOR_MAX(9999999)]}
+                   validators={[VALIDATOR_MIN(0), VALIDATOR_REQUIRE(), VALIDATOR_MAX(9999999)]}
                    onInput={inputHandler}
             />
             <Input label="price max:"
@@ -115,7 +161,7 @@ export const NewAds = () => {
                    type="number"
                    min="0"
                    errorText="Price is required."
-                   validators={[VALIDATOR_MIN(0), VALIDATOR_REQUIRE(),VALIDATOR_MAX(9999999)]}
+                   validators={[VALIDATOR_MIN(0), VALIDATOR_REQUIRE(), VALIDATOR_MAX(9999999)]}
                    onInput={inputHandler}
             />
             <Input label="Technology:"
@@ -124,7 +170,7 @@ export const NewAds = () => {
                    placeholder=""
                    type="text"
                    errorText="Technology is required."
-                   validators={[VALIDATOR_REQUIRE(),VALIDATOR_MAXLENGTH(100)]}
+                   validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(100)]}
                    onInput={inputHandler}
             />
             <Input label="Description:"
@@ -137,5 +183,6 @@ export const NewAds = () => {
                    onInput={inputHandler}
             />
             <Button type="submit" disabled={!formState.isValid}>ADD AD</Button>
-        </form>)
-}
+        </form>
+    </>);
+};
