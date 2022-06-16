@@ -6,11 +6,8 @@ import './NavLinks.css'
 import {AuthContext} from "../../context/AuthContext";
 import {Button} from "../FormElements/Buttons";
 
-interface Props {
 
-}
-
-export const NavLinks = (props: Props) => {
+export const NavLinks = () => {
     const auth = useContext(AuthContext)
 
     return (
@@ -19,7 +16,7 @@ export const NavLinks = (props: Props) => {
                 <NavLink to="/">Find jobs</NavLink>
             </li>
             {auth.isLoggedIn && <li>
-                <NavLink to="/userId/ads">My ads</NavLink>
+                <NavLink to={`/${auth.userId}/ads`}>My ads</NavLink>
             </li>}
             {auth.isLoggedIn && <li>
                 <NavLink to="/new">Add ad</NavLink>

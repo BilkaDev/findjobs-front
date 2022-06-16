@@ -1,6 +1,7 @@
-import {useCallback, useEffect, useRef, useState} from "react";
-import {LoginUserEntity, UserEntity} from 'types';
+import {useCallback, useState} from "react";
+import {AdEntity, LoginUserEntity, UserEntity} from 'types';
 
+export type ReqBody = Omit<UserEntity, 'id'>| Omit<AdEntity, 'id'> | LoginUserEntity | null
 
 export const useHttpClient = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +13,7 @@ export const useHttpClient = () => {
         async (
             url: string,
             method = 'GET',
-            body: Omit<UserEntity, 'id'> | LoginUserEntity | null = null,
+            body: ReqBody = null,
             headers = {}
         ) => {
             try {
@@ -32,7 +33,6 @@ export const useHttpClient = () => {
 
                 return responseData;
             } catch (e: any) {
-                console.log(e);
                 setError(statusError === 500 ? 'Sorry, please try again later' : e.message);
                 setIsLoading(false);
 

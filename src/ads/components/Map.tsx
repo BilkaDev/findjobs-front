@@ -20,7 +20,6 @@ interface Props {
 export const Map = (props: Props) => {
     const nav = useNavigate();
     const [centerLocation, setCenterLocation] = useState<LatLngExpression>([52.3862034, 18.6043395]);
-
     useEffect(() => {
         if (props.ad) {
             setCenterLocation([props.ad.lat, props.ad.lon]);
@@ -31,20 +30,23 @@ export const Map = (props: Props) => {
         nav(`/ad/${adId}`);
     }
 
-    const drawMarkers = props.ads.map(ad => (
-        <Marker key={ad.id}
-                position={[ad.lat, ad.lon]}
-                icon={icon(
-                    {
-                        iconUrl: (props.ad !== undefined && props.ad.id === ad.id) ? iconBlack : iconBlue
-                    })
-                }>
-            <Popup className="Map__popup">
-                <div onClick={() => clickHandler(ad.id)} className="Map__poput--click">
-                    {ad.title}
-                </div>
-            </Popup>
-        </Marker>));
+    const loadedAds = props.ads.length === 0 && props.ad !== undefined ? [props.ad] : [...props.ads];
+    const drawMarkers = loadedAds.map(ad => {
+        return (
+            <Marker key={ad.id}
+                    position={[ad.lat, ad.lon]}
+                    icon={icon(
+                        {
+                            iconUrl: (props.ad !== undefined && props.ad.id === ad.id) ? iconBlack : iconBlue
+                        })
+                    }>
+                <Popup className="Map__popup">
+                    <div onClick={() => clickHandler(ad.id)} className="Map__poput--click">
+                        {ad.title}
+                    </div>
+                </Popup>
+            </Marker>);
+    });
 
     return (
         <div className="Map">

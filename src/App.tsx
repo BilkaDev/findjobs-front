@@ -12,6 +12,7 @@ import './App.css';
 
 export const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userId, setUserId] = useState<string | null>(null);
     const login = useCallback(() => setIsLoggedIn(true), [])
     const logout = useCallback(() => setIsLoggedIn(false), [])
 
@@ -44,7 +45,8 @@ export const App = () => {
 
         <AuthContext.Provider value={{
             isLoggedIn: isLoggedIn,
-            userId: null,
+            userId,
+            setUserId,
             login,
             logout,
         }}>
