@@ -74,6 +74,7 @@ export const Auth = () => {
     };
     const switchModeHandler = () => {
         if (!isLoginMode) {
+
             setFormDate({
                 ...formState.inputs,
                 name: undefined,
@@ -87,6 +88,7 @@ export const Auth = () => {
                 }
             }, false);
         }
+        console.log(formState.inputs.email.isValid && formState.inputs.password.isValid);
         setIsLoginMode(prevMode => !prevMode);
     };
 
