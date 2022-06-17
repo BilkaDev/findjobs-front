@@ -14,14 +14,13 @@ import {AuthContext} from "../../common/context/AuthContext";
 import {useHttpClient} from "../../common/hooks/http-hook";
 import {ErrorModal} from "../../common/components/UiElement/ErrorModal";
 import {LoadingSpinner} from "../../common/components/UiElement/LoadingSpinner";
+import {UserLoginRes} from "types"
 import './Auth.css';
 
 
 export const Auth = () => {
     const auth = useContext(AuthContext);
     const {sendRequest, isLoading, error, setError} = useHttpClient();
-
-
     const [isLoginMode, setIsLoginMode] = useState(true);
 
     const [formState, inputHandler, setFormDate] = useForm({
@@ -40,7 +39,7 @@ export const Auth = () => {
     const authSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (isLoginMode) {
-            const res = await sendRequest(
+            const res: UserLoginRes = await sendRequest(
                 '/user/login',
                 'POST',
                 {
@@ -48,10 +47,10 @@ export const Auth = () => {
                     password: formState.inputs.password.value,
                 },
                 {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 }
             );
-            auth.setUserId(res.id)
+            auth.login(res.id,res.token);
 
 
         } else {
@@ -64,12 +63,12 @@ export const Auth = () => {
                     password: formState.inputs.password.value,
                 },
                 {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 }
             );
-            auth.setUserId(res.user.id)
+            console.log(res, res.token);
+            auth.login(res.user.id,res.user.token);
         }
-        auth.login();
         nav('/');
     };
     const switchModeHandler = () => {
@@ -88,7 +87,6 @@ export const Auth = () => {
                 }
             }, false);
         }
-        console.log(formState.inputs.email.isValid && formState.inputs.password.isValid);
         setIsLoginMode(prevMode => !prevMode);
     };
 

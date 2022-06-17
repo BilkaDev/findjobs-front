@@ -88,7 +88,8 @@ export const NewAds = () => {
                 'POST',
                 newAd,
                 {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${auth.token}`,
                 }
             );
             setResultInfo(`${res.newAd.name} added with ID ${res.newAd.id}.`);
@@ -113,7 +114,7 @@ export const NewAds = () => {
                    element="input"
                    placeholder=""
                    type="text"
-                   errorText="Please enter company name"
+                   errorText="Please enter company name, max char 30."
                    validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(30)]}
                    onInput={inputHandler}
             />

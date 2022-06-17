@@ -11,15 +11,22 @@ import './App.css';
 
 
 export const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userId, setUserId] = useState<string | null>(null);
-    const login = useCallback(() => setIsLoggedIn(true), [])
-    const logout = useCallback(() => setIsLoggedIn(false), [])
+    const [token, setToken] = useState<string | boolean>(false);
 
+    const login = useCallback((userId:string,token:string) => {
+        setToken(token)
+        setUserId(userId)
+    }, [])
+    const logout = useCallback(() => {
+        setToken(false)
+        setUserId(null)
+    }, [])
 
     let routes;
 
-    if (isLoggedIn) {
+
+    if (token) {
         routes = (
             <Routes>
                 <Route path="/" element={<Ads/>}/>
@@ -44,8 +51,10 @@ export const App = () => {
     return (
 
         <AuthContext.Provider value={{
-            isLoggedIn: isLoggedIn,
+            isLoggedIn: !!token,
             userId,
+            token,
+            setToken,
             setUserId,
             login,
             logout,
