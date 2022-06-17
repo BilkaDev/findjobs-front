@@ -6,11 +6,11 @@ import {Modal} from "../../common/components/UiElement/Modal";
 import {Map} from "./Map";
 import {AuthContext} from "../../common/context/AuthContext";
 import {AdEntity, SimpleAdEntity} from "../../../../findjobs-back/types/ad-entity";
-import './Ad.css';
 import {useHttpClient} from "../../common/hooks/http-hook";
 import {ErrorModal} from "../../common/components/UiElement/ErrorModal";
 import {useNavigate} from "react-router-dom";
 import {LoadingSpinner} from "../../common/components/UiElement/LoadingSpinner";
+import './Ad.css';
 
 
 interface Props {
@@ -21,6 +21,7 @@ interface Props {
 
 export const Ad = (props: Props) => {
     const [loadedAd, setLoadedAd] = useState<AdEntity>();
+    const [resultInfo, setResultInfo] = useState<string | null>(null);
     const {isLoading, error, sendRequest, clearError} = useHttpClient();
     const [showConfirmModal, setShowConfirmModal,] = useState(false);
     const [showMap, setShowMap] = useState(false);
@@ -35,12 +36,14 @@ export const Ad = (props: Props) => {
             setLoadedAd(loadedAd.ad);
             props.setAd(loadedAd.ad as AdEntity);
         })();
-
+        return () => {
+            setResultInfo(null);
+        };
     }, [adId]);
 
-    function confirmDeleteHandler() {
-        //@todo connect to be delete ad!
-        console.log("DELETE...");
+    async function confirmDeleteHandler() {
+        await sendRequest(`/job/${adId}`, 'DELETE');
+        setResultInfo('Deleted successfully');
     }
 
     const openMapHandler = () => setShowMap(true);
@@ -59,7 +62,6 @@ export const Ad = (props: Props) => {
         </>;
     }
 
-
     const {
         id,
         name,
@@ -69,10 +71,18 @@ export const Ad = (props: Props) => {
         salaryMin,
         salaryMax,
         technology,
-        lat,
-        lon,
-        creatorId,
     } = loadedAd;
+
+    if (resultInfo !== null) {
+        return (
+            <div className="center margin">
+                <Card className="result-info">
+                    <p style={{color: 'black'}}>{resultInfo}</p>
+                    <Button to={`${auth.userId}/ads`}>Back to My ads</Button>
+                </Card>
+            </div>);
+    }
+
     return (
         <>
             {error && <ErrorModal className="ads" error={error} onClick={() => clearError()}/>}

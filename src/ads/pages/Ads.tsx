@@ -2,7 +2,7 @@ import React, {FormEvent, useEffect, useState} from 'react';
 
 import {AdsList} from "../components/AdsList";
 import {Map} from '../components/Map';
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {SimpleAdEntity, AdEntity} from '../../../../findjobs-back/types/ad-entity';
 import {Ad} from "../components/Ad";
 import {useHttpClient} from "../../common/hooks/http-hook";
@@ -17,24 +17,24 @@ export const Ads = () => {
     const [inputValue, setInputValue] = useState('');
     const nav = useNavigate();
     let {adId: adIdPath} = useParams();
+    const query = new URLSearchParams(useLocation().search).get("search");
     useEffect(() => {
         (async () => {
-                if (!adIdPath) {
+                if (!adIdPath && !query?.length) {
                     const loadedAds = await sendRequest('/job/');
                     setLoadedAds(loadedAds.ads);
                     setLoadedAd(undefined);
                 }
             }
         )();
-    }, [adIdPath]);
+    }, [adIdPath, query]);
 
     async function submitForm(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (inputValue === '') return;
-        nav('/');
+        nav(`/?search=${inputValue}`);
         const loadedAds = await sendRequest(`/job/search/${inputValue}`);
         setLoadedAds(loadedAds.ads);
-
     }
 
     return (<>
