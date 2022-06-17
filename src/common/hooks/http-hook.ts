@@ -1,7 +1,13 @@
 import {useCallback, useState} from "react";
 import {AdEntity, LoginUserEntity, UserEntity} from 'types';
 
-export type ReqBody = Omit<UserEntity, 'id'>| Omit<AdEntity, 'id'> | LoginUserEntity | null
+export type ReqBody = (
+    Omit<UserEntity, 'id'>
+    | Omit<AdEntity, 'id'>
+    | AdEntity
+    | LoginUserEntity
+    | null
+    )
 
 export const useHttpClient = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -38,8 +44,6 @@ export const useHttpClient = () => {
 
                 throw e;
             }
-
-
         }, []);
     const clearError = () => {
         setError(null);

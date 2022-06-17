@@ -101,7 +101,7 @@ export const Ad = (props: Props) => {
                 </div>
                 <div className="AdItem__content">
                     <div className="AdItem__info">
-                        <h2>Name: {name}</h2>
+                        <h2>{name}</h2>
                         <h3>{title}</h3>
                         <p className="address">Address: {address}</p>
                     </div>
