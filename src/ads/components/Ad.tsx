@@ -42,7 +42,7 @@ export const Ad = (props: Props) => {
     }, [adId]);
 
     async function confirmDeleteHandler() {
-        await sendRequest(`/job/${adId}`, 'DELETE');
+        await sendRequest(`/job/${adId}`, 'DELETE',null,{"Authorization": `Bearer ${auth.token}`});
         setResultInfo('Deleted successfully');
     }
 
@@ -78,7 +78,7 @@ export const Ad = (props: Props) => {
             <div className="center margin">
                 <Card className="result-info">
                     <p style={{color: 'black'}}>{resultInfo}</p>
-                    <Button to={`${auth.userId}/ads`}>Back to My ads</Button>
+                    <Button to={`/${auth.userId}/ads`}>Back to My ads</Button>
                 </Card>
             </div>);
     }

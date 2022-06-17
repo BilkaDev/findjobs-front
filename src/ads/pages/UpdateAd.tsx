@@ -138,7 +138,8 @@ export const UpdateAd = () => {
                 'PATCH',
                 newAd,
                 {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${auth.token}`,
                 }
             );
             setResultInfo(`${res.updateAd.title} has been updated`);
@@ -162,7 +163,7 @@ export const UpdateAd = () => {
             <div className="center margin">
                 <Card className="result-info">
                     <p>{resultInfo}</p>
-                    <Button to={`${auth.userId}/ads`}>Back to My ads</Button>
+                    <Button to={`/${auth.userId}/ads`}>Back to My ads</Button>
                     <Button onClick={() => setResultInfo(null)}>Back to update ad</Button>
                 </Card>
             </div>);
