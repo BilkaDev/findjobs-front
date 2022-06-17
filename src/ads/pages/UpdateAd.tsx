@@ -62,41 +62,43 @@ export const UpdateAd = () => {
     useEffect(() => {
         (async () => {
             const loadedAd = await sendRequest(`/job/${adId}`);
-            setFormData({
-                title: {
-                    value: loadedAd.ad.title,
-                    isValid: true
-                },
-                address: {
-                    value: loadedAd.ad.address,
-                    isValid: true
-                },
-                name: {
-                    value: loadedAd.ad.name,
-                    isValid: true
-                },
-                description: {
-                    value: loadedAd.ad.description,
-                    isValid: true,
-                },
-                email: {
-                    value: loadedAd.ad.email,
-                    isValid: true,
-                },
-                "price-min": {
-                    value: loadedAd.ad.salaryMin,
-                    isValid: true
-                },
-                "price-max": {
-                    value: loadedAd.ad.salaryMax,
-                    isValid: true
-                },
-                technology: {
-                    value: loadedAd.ad.technology,
-                    isValid: true
-                },
-            }, true);
-            setLoadedAd(loadedAd.ad);
+            if (loadedAd.ad.id === adId && auth.userId === loadedAd.ad.creatorId) {
+                setFormData({
+                    title: {
+                        value: loadedAd.ad.title,
+                        isValid: true
+                    },
+                    address: {
+                        value: loadedAd.ad.address,
+                        isValid: true
+                    },
+                    name: {
+                        value: loadedAd.ad.name,
+                        isValid: true
+                    },
+                    description: {
+                        value: loadedAd.ad.description,
+                        isValid: true,
+                    },
+                    email: {
+                        value: loadedAd.ad.email,
+                        isValid: true,
+                    },
+                    "price-min": {
+                        value: loadedAd.ad.salaryMin,
+                        isValid: true
+                    },
+                    "price-max": {
+                        value: loadedAd.ad.salaryMax,
+                        isValid: true
+                    },
+                    technology: {
+                        value: loadedAd.ad.technology,
+                        isValid: true
+                    },
+                }, true);
+                setLoadedAd(loadedAd.ad);
+            }
         })();
         return () => {
             setResultInfo(null)
@@ -110,7 +112,7 @@ export const UpdateAd = () => {
             return setError("Sorry, please try again");
         }
         const geoRes = await geocode(formState.inputs.address.value);
-        if (!geoRes.resStatus) {
+        if (!geoRes.resStatus ) {
             setError(geoRes.resMessage);
         } else {
             const {lat, lon} = geoRes;
@@ -131,7 +133,6 @@ export const UpdateAd = () => {
                 lon,
 
             };
-
             const res = await sendRequest(
                 `/job/${adId}`,
                 'PATCH',
