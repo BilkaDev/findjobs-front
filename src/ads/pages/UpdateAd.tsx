@@ -97,8 +97,10 @@ export const UpdateAd = () => {
                 },
             }, true);
             setLoadedAd(loadedAd.ad);
-
         })();
+        return () => {
+            setResultInfo(null)
+        }
     }, [adId]);
 
 
@@ -138,7 +140,7 @@ export const UpdateAd = () => {
                     'Content-Type': 'application/json'
                 }
             );
-            setResultInfo(`${res.newAd.title} has been updated`);
+            setResultInfo(`${res.updateAd.title} has been updated`);
         }
     }
 
@@ -146,7 +148,6 @@ export const UpdateAd = () => {
         return <div className="center" style={{margin: "2rem"}}><Card style={{padding: "1rem"}}><h2>Could not find
             ad</h2></Card></div>;
     }
-
     if (isLoading) {
         return (
             <div className="center">
@@ -154,12 +155,14 @@ export const UpdateAd = () => {
             </div>
         );
     }
+
     if (resultInfo !== null) {
         return (
             <div className="center margin">
                 <Card className="result-info">
                     <p>{resultInfo}</p>
-                    <Button onClick={() => setResultInfo(null)}>Add another one</Button>
+                    <Button to={`${auth.userId}/ads`}>Back to My ads</Button>
+                    <Button onClick={() => setResultInfo(null)}>Back to update ad</Button>
                 </Card>
             </div>);
     }
