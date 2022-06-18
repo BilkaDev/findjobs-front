@@ -4,7 +4,7 @@ interface AuthContextType {
     userId: string | null;
     isLoggedIn: boolean;
     token: string | boolean;
-    login: (userId: string,token: string) => void;
+    login: (userId: string,token: string, expirations?: Date) => void;
     logout: () => void;
 }
 

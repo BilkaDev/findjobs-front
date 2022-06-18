@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import {Route, Routes} from "react-router-dom";
 import {Ads} from "./ads/pages/Ads";
 import {NewAds} from "./ads/pages/NewAds";
