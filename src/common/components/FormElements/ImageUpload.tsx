@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import './ImageUpload.css';
-import logoImage from './../../../assets/images/logo-image.png'
+import logoImage from './../../../assets/images/logo-image.png';
 import {Button} from "./Buttons";
 
 interface Props {
@@ -74,7 +74,7 @@ export const ImageUpload = (props: Props) => {
                     PICK IMAGE
                 </Button>
             </div>
-            {!isValid && <p>{props.errorText}</p>}
+            {!isValid && <p className="Input__error-text">{props.errorText}</p>}
         </div>
     );
 };

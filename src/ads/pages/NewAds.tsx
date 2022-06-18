@@ -10,7 +10,6 @@ import {
 } from "../../common/utils/validators";
 import {useForm} from "../../common/hooks/form-hook";
 import {useHttpClient} from "../../common/hooks/http-hook";
-import {AdEntity} from '../../../../findjobs-back/types/ad-entity';
 import {ErrorModal} from "../../common/components/UiElement/ErrorModal";
 import {LoadingSpinner} from "../../common/components/UiElement/LoadingSpinner";
 import {Card} from "../../common/components/UiElement/Card";
@@ -67,31 +66,29 @@ export const NewAds = () => {
             setError(geoRes.resMessage);
         } else {
             const {lat, lon} = geoRes;
-            const newAd: Omit<AdEntity, 'id'> = {
-                name: formState.inputs.name.value,
-                title: formState.inputs.title.value,
-                address: formState.inputs.address.value,
-                creatorId: auth.userId as string,
-                description: formState.inputs.description.value,
-                email: formState.inputs.email.value,
-                salaryMin: Number(formState.inputs["price-min"].value),
-                salaryMax: Number(formState.inputs["price-max"].value),
-                technology: formState.inputs.technology.value,
-                //@todo change image url!
-                image: "https://cdn.pixabay.com/photo/2016/12/21/15/48/bitcoin-1923206_960_720.png",
-                lat,
-                lon,
-            };
 
+            const formData = new FormData();
+            formData.append('name', formState.inputs.name.value);
+            formData.append('title', formState.inputs.title.value);
+            formData.append('address', formState.inputs.address.value);
+            formData.append('creatorId', (auth.userId as string));
+            formData.append('description', formState.inputs.description.value);
+            formData.append('email', formState.inputs.email.value);
+            formData.append('salaryMin', formState.inputs["price-min"].value);
+            formData.append('salaryMax', formState.inputs["price-max"].value);
+            formData.append('technology', formState.inputs.technology.value);
+            formData.append('image', formState.inputs.image.value);
+            formData.append('lat', lat + "");
+            formData.append('lon', lon + "");
             const res = await sendRequest(
                 '/job',
                 'POST',
-                newAd,
+                formData,
                 {
-                    'Content-Type': 'application/json',
                     "Authorization": `Bearer ${auth.token}`,
                 }
             );
+
             setResultInfo(`${res.newAd.name} added with ID ${res.newAd.id}.`);
         }
     };
@@ -120,14 +117,14 @@ export const NewAds = () => {
             />
             {<ImageUpload
                 id="image"
-                errorText=""
+                errorText="Please add image."
                 onInput={inputHandler}
                 center
             />}
             <Input label="Address:"
                    id="address"
                    element="input"
-                   placeholder=""
+                   placeholder="Country, city, street number"
                    type="text"
                    errorText="Please enter a valid address"
                    validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(100)]}

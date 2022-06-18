@@ -1,9 +1,9 @@
 import React from 'react';
-import {SimpleAdEntity} from 'types'
+import {SimpleAdEntity} from 'types';
 import {LogoImage} from "../../common/components/UiElement/LogoImage";
 import {Link} from "react-router-dom";
 import {Card} from "../../common/components/UiElement/Card";
-import './AdItem.css'
+import './AdItem.css';
 
 
 interface Props {
@@ -21,10 +21,7 @@ export const AdItem = (props: Props) => {
         salaryMin,
         salaryMax,
         technology,
-        lat,
-        lon,
-    } = props.ad
-
+    } = props.ad;
 
     return (
         <li className="AdItem">
@@ -32,7 +29,7 @@ export const AdItem = (props: Props) => {
                 <Link to={`/ad/${id}`}>
 
                     <div className="AdItem__image">
-                        <LogoImage image={image} name={name}/>
+                        <LogoImage image={`http://localhost:3001/${image}`} name={name}/>
 
                     </div>
                     <div className="AdItem__content">
@@ -49,5 +46,5 @@ export const AdItem = (props: Props) => {
                 </Link>
             </Card>
         </li>
-    )
-}
+    );
+};

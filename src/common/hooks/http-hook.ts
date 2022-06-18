@@ -3,10 +3,10 @@ import {AdEntity, LoginUserEntity, UserEntity} from 'types';
 
 export type ReqBody = (
     Omit<UserEntity, 'id'>
-    | Omit<AdEntity, 'id'>
     | AdEntity
     | LoginUserEntity
     | null
+    | FormData
     )
 
 export const useHttpClient = () => {
