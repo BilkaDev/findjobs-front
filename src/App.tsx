@@ -8,20 +8,11 @@ import {UpdateAd} from "./ads/pages/UpdateAd";
 import {Auth} from "./users/pages/Auth";
 import {AuthContext} from './common/context/AuthContext';
 import './App.css';
+import {useAuth} from "./common/hooks/auth-hook";
 
 
 export const App = () => {
-    const [userId, setUserId] = useState<string | null>(null);
-    const [token, setToken] = useState<string | boolean>(false);
-
-    const login = useCallback((userId:string,token:string) => {
-        setToken(token)
-        setUserId(userId)
-    }, [])
-    const logout = useCallback(() => {
-        setToken(false)
-        setUserId(null)
-    }, [])
+    const {login,logout,token,userId} = useAuth()
 
     let routes;
 
@@ -54,8 +45,6 @@ export const App = () => {
             isLoggedIn: !!token,
             userId,
             token,
-            setToken,
-            setUserId,
             login,
             logout,
         }}>
