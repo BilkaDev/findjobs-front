@@ -27,7 +27,6 @@ export const Ad = (props: Props) => {
     const [showMap, setShowMap] = useState(false);
     const {adId} = props;
     const nav = useNavigate();
-
     const auth = useContext(AuthContext);
 
     useEffect(() => {
@@ -71,6 +70,7 @@ export const Ad = (props: Props) => {
         salaryMin,
         salaryMax,
         technology,
+        creatorId,
     } = loadedAd;
 
     if (resultInfo !== null) {
@@ -107,7 +107,7 @@ export const Ad = (props: Props) => {
             </Modal>}
             <Card className="Ad">
                 <div className="Ad__image">
-                    <LogoImage image={image} name={name}/>
+                    <LogoImage image={`http://localhost:3001/${image}`} name={name}/>
                 </div>
                 <div className="AdItem__content">
                     <div className="AdItem__info">
@@ -125,9 +125,9 @@ export const Ad = (props: Props) => {
                             Nobis quisquam raLorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis quisquam
                             ratione veniam vitae! Accusamus accusantium debitis distinctio, earum magni obcaecati.</p>
                     </div>
-                    {auth.isLoggedIn && <Button to={`/edit-ad/${id}`}>EDIT</Button>}
+                    {(auth.isLoggedIn && creatorId === auth.userId) &&  <Button to={`/edit-ad/${id}`}>EDIT</Button>}
                     <Button className="Ad__show-map" inverse onClick={openMapHandler}>View on map</Button>
-                    {auth.isLoggedIn && <Button danger onClick={() => setShowConfirmModal(true)}>DELETE</Button>}
+                    {(auth.isLoggedIn && creatorId === auth.userId) && <Button danger onClick={() => setShowConfirmModal(true)}>DELETE</Button>}
                 </div>
             </Card>
         </>
