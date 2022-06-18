@@ -17,6 +17,7 @@ import {Card} from "../../common/components/UiElement/Card";
 import {geocode} from "../../common/utils/geocoding";
 import {AuthContext} from "../../common/context/AuthContext";
 import './NewAds.css';
+import {ImageUpload} from "../../common/components/FormElements/ImageUpload";
 
 export const NewAds = () => {
 
@@ -80,7 +81,6 @@ export const NewAds = () => {
                 image: "https://cdn.pixabay.com/photo/2016/12/21/15/48/bitcoin-1923206_960_720.png",
                 lat,
                 lon,
-
             };
 
             const res = await sendRequest(
@@ -118,6 +118,12 @@ export const NewAds = () => {
                    validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(30)]}
                    onInput={inputHandler}
             />
+            {<ImageUpload
+                id="image"
+                errorText=""
+                onInput={inputHandler}
+                center
+            />}
             <Input label="Address:"
                    id="address"
                    element="input"

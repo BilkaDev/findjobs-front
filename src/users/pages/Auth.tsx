@@ -54,7 +54,7 @@ export const Auth = () => {
 
 
         } else {
-            const res = await sendRequest(
+            const res: {user:UserLoginRes} = await sendRequest(
                 '/user/singup',
                 'POST',
                 {
@@ -66,7 +66,6 @@ export const Auth = () => {
                     'Content-Type': 'application/json',
                 }
             );
-            console.log(res, res.token);
             auth.login(res.user.id,res.user.token);
         }
         nav('/');
