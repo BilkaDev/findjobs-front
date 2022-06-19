@@ -34,6 +34,7 @@ export const Ad = (props: Props) => {
             const loadedAd = await sendRequest(`/job/${adId}`);
             setLoadedAd(loadedAd.ad);
             props.setAd(loadedAd.ad);
+            setShowMap(false)
         })();
         return () => {
             setResultInfo(null);
