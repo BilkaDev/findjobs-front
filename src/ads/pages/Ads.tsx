@@ -34,7 +34,7 @@ export const Ads = () => {
 
         <div className="Ads">
             <div className="AdsView">
-                <AdsMenuBar sendRequest={sendRequest} path={adIdPath} setAds={setLoadedAds}/>
+                <AdsMenuBar sendRequest={sendRequest} path={adIdPath} ads={loadedAds} setAds={setLoadedAds}/>
                 {isLoading && (
                     <div className="center">
                         <LoadingSpinner/>

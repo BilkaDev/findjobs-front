@@ -128,6 +128,7 @@ export const UpdateAd = () => {
                 salaryMax: Number(formState.inputs["price-max"].value),
                 technology: formState.inputs.technology.value,
                 image: "",
+                date: new Date(),
                 lat,
                 lon,
 
