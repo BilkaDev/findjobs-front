@@ -1,13 +1,12 @@
 import React, {FormEvent, useEffect, useState} from 'react';
-
 import {AdsList} from "../components/AdsList";
 import {Map} from '../components/Map';
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {SimpleAdEntity, AdEntity} from '../../../../findjobs-back/types/ad-entity';
 import {Ad} from "../components/Ad";
 import {useHttpClient} from "../../common/hooks/http-hook";
 import {ErrorModal} from "../../common/components/UiElement/ErrorModal";
 import {LoadingSpinner} from "../../common/components/UiElement/LoadingSpinner";
+import {SimpleAdEntity, AdEntity} from '../../../../findjobs-back/types/ad-entity';
 import './Ads.css';
 
 export const Ads = () => {

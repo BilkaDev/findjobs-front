@@ -5,7 +5,7 @@ import {Button} from "./Buttons";
 
 interface Props {
     id: string;
-    onInput: any;
+    onInput:  (id: string, value: any, isValid: boolean) => void;
     center?: boolean;
     errorText: string;
 }

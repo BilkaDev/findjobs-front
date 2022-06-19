@@ -1,12 +1,12 @@
 import {useCallback, useState} from "react";
-import {AdEntity, LoginUserEntity, UserEntity} from 'types';
+import {AdEntity, LoginUserEntity,NewAdEntity} from 'types';
 
 export type ReqBody = (
-    Omit<UserEntity, 'id'>
+    NewAdEntity
     | AdEntity
     | LoginUserEntity
-    | null
     | FormData
+    | null
     )
 
 export const useHttpClient = () => {

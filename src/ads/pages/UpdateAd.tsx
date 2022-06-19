@@ -127,8 +127,7 @@ export const UpdateAd = () => {
                 salaryMin: Number(formState.inputs["price-min"].value),
                 salaryMax: Number(formState.inputs["price-max"].value),
                 technology: formState.inputs.technology.value,
-                //@todo change image url!
-                image: "https://cdn.pixabay.com/photo/2016/12/21/15/48/bitcoin-1923206_960_720.png",
+                image: "",
                 lat,
                 lon,
 

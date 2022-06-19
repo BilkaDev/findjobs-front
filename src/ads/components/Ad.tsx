@@ -16,7 +16,7 @@ import './Ad.css';
 interface Props {
     adId: string;
     ads: SimpleAdEntity[];
-    setAd: any;
+    setAd: (ad : AdEntity)=> void;
 }
 
 export const Ad = (props: Props) => {
@@ -33,7 +33,7 @@ export const Ad = (props: Props) => {
         (async () => {
             const loadedAd = await sendRequest(`/job/${adId}`);
             setLoadedAd(loadedAd.ad);
-            props.setAd(loadedAd.ad as AdEntity);
+            props.setAd(loadedAd.ad);
         })();
         return () => {
             setResultInfo(null);
@@ -64,6 +64,7 @@ export const Ad = (props: Props) => {
     const {
         id,
         name,
+        email,
         image,
         title,
         address,
@@ -124,10 +125,15 @@ export const Ad = (props: Props) => {
                             adipisicing elit. Nobis quisquam raLorem ipsum dolor sit amet, consectetur adipisicing elit.
                             Nobis quisquam raLorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis quisquam
                             ratione veniam vitae! Accusamus accusantium debitis distinctio, earum magni obcaecati.</p>
+                        <div className="Ad__contact">
+                            <p>Contact us: {email}</p>
+                        </div>
                     </div>
+
                     {(auth.isLoggedIn && creatorId === auth.userId) &&  <Button to={`/edit-ad/${id}`}>EDIT</Button>}
                     <Button className="Ad__show-map" inverse onClick={openMapHandler}>View on map</Button>
                     {(auth.isLoggedIn && creatorId === auth.userId) && <Button danger onClick={() => setShowConfirmModal(true)}>DELETE</Button>}
+                    {(auth.isLoggedIn && creatorId !== auth.userId) && <Button href={`mailto: ${email}`}>APPLY</Button>}
                 </div>
             </Card>
         </>

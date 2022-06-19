@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {AdsList} from "../components/AdsList";
-
 import {Card} from "../../common/components/UiElement/Card";
 import {Button} from "../../common/components/FormElements/Buttons";
 import {SimpleAdEntity} from "types";
-import './UserAds.css';
 import {useHttpClient} from "../../common/hooks/http-hook";
 import {ErrorModal} from "../../common/components/UiElement/ErrorModal";
 import {LoadingSpinner} from "../../common/components/UiElement/LoadingSpinner";
+import './UserAds.css';
 
 
 export const UserAds = () => {

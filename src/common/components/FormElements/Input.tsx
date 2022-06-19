@@ -1,7 +1,6 @@
 import React, {ChangeEvent, useEffect, useReducer} from 'react';
-
-import "./Input.css"
 import {validate, Validator} from "../../utils/validators";
+import "./Input.css"
 
 interface Props {
     initialValue?: string | number;

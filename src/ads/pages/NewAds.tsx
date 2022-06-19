@@ -15,8 +15,8 @@ import {LoadingSpinner} from "../../common/components/UiElement/LoadingSpinner";
 import {Card} from "../../common/components/UiElement/Card";
 import {geocode} from "../../common/utils/geocoding";
 import {AuthContext} from "../../common/context/AuthContext";
-import './NewAds.css';
 import {ImageUpload} from "../../common/components/FormElements/ImageUpload";
+import './NewAds.css';
 
 export const NewAds = () => {
 
