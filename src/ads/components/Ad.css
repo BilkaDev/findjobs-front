@@ -1,4 +1,5 @@
 .Ad{
+    position: relative;
     margin: 1.5rem;
     padding: 2rem;
     display: flex;
@@ -59,4 +60,9 @@
 }
 .Ad__contact {
     margin-top: 1rem;
+}
+.AD__Button-back {
+    position: absolute;
+    top: 5%;
+    left: 5%;
 }

@@ -107,6 +107,7 @@ export const Ad = (props: Props) => {
                 </div>
             </Modal>}
             <Card className="Ad">
+                <Button className="AD__Button-back" onClick={()=> nav(-1)}>BACK</Button>
                 <div className="Ad__image">
                     <LogoImage image={`http://localhost:3001/${image}`} name={name}/>
                 </div>
