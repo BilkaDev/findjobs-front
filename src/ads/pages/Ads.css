@@ -10,19 +10,7 @@
     padding: 0;
     color: #fff;
 }
-.AdsView__menu {
-    display: flex;
-    margin-bottom: 1rem;
-    padding: 1rem 1rem;
-    width: 100%;
-    height: 5rem;
-    -webkit-box-shadow: 0 5px 3px 3px rgba(0,0,0,0.74);
-    box-shadow: 0 5px 3px 3px rgba(0,0,0,0.74);
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
-    background-color: #323232;
-}
+
 
 
 

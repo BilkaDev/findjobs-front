@@ -39,7 +39,7 @@ export const AdItem = (props: Props) => {
                             <p className="address">{address}</p>
                         </div>
                         <div className="AdItem__salary">
-                            <h2>{salaryMin} - {salaryMax}</h2>
+                            <h2>{salaryMin}$ - {salaryMax}$</h2>
                             <p>{technology}</p>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
 import React, {FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import { SimpleAdEntity } from "../../../../findjobs-back/types/ad-entity";
+import './AdsMenuBar.css'
 
 interface Props {
     path: string | undefined;

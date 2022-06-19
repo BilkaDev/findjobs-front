@@ -1,12 +1,11 @@
 @media (min-width: 768px) {
     .UserAds.AdsList {
+        margin-top: 1rem;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-evenly;
     }
-
     .UserAds.AdsList .AdItem {
         width: 45%;
-
     }
 }

@@ -1,0 +1,10 @@
+.AdsView__menu {
+    display: flex;
+    padding: 1rem 1rem;
+    width: 100%;
+    height: 5rem;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    background-color: #323232;
+}
