@@ -4,6 +4,7 @@ import {LogoImage} from "../../common/components/UiElement/LogoImage";
 import {Link} from "react-router-dom";
 import {Card} from "../../common/components/UiElement/Card";
 import './AdItem.css';
+import {apiUrl} from "../../config/api";
 
 
 interface Props {
@@ -29,7 +30,7 @@ export const AdItem = (props: Props) => {
                 <Link to={`/ad/${id}`}>
 
                     <div className="AdItem__image">
-                        <LogoImage image={`http://localhost:3001/${image}`} name={name}/>
+                        <LogoImage image={`${apiUrl}/${image}`} name={name}/>
 
                     </div>
                     <div className="AdItem__content">

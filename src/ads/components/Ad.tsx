@@ -11,6 +11,7 @@ import {ErrorModal} from "../../common/components/UiElement/ErrorModal";
 import {useNavigate} from "react-router-dom";
 import {LoadingSpinner} from "../../common/components/UiElement/LoadingSpinner";
 import './Ad.css';
+import {apiUrl} from "../../config/api";
 
 
 interface Props {
@@ -110,7 +111,7 @@ export const Ad = (props: Props) => {
             <Card className="Ad">
                 <Button className="AD__Button-back" onClick={()=> nav(-1)}>BACK</Button>
                 <div className="Ad__image">
-                    <LogoImage image={`http://localhost:3001/${image}`} name={name}/>
+                    <LogoImage image={`${apiUrl}/${image}`} name={name}/>
                 </div>
                 <div className="AdItem__content">
                     <div className="AdItem__info">
