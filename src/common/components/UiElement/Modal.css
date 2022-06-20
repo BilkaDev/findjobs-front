@@ -1,0 +1,49 @@
+.Modal {
+    z-index: 100;
+    position: fixed;
+    top: 22vh;
+    left: 10%;
+    width: 80%;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border: 2px solid #002d65;
+    border-radius: 8px;
+}
+
+
+.Modal__header {
+    width: 100%;
+    padding: 1rem 0.5rem;
+    background: #012b6c;
+    color: white;
+}
+
+.Modal__header h2 {
+    margin: 0.5rem;
+}
+
+.Modal__content {
+    font-size: 1.8rem;
+    padding: 1rem 0.5rem;
+}
+
+.Modal__footer {
+    padding: 1rem 0.5rem;
+}
+
+@media (min-width: 768px) {
+    .Modal {
+        width: 28%;
+    }
+    .ErrorModal {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50%;
+    }
+    .ErrorModal.ads{
+        width: 28%;
+        left: 10%;
+        transform: translateX(0);
+    }
+}
+

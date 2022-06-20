@@ -1,0 +1,67 @@
+.AdItem {
+    margin: 0.5rem 0.5rem;
+    width: 95%;
+}
+
+.AdItem a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #423E3A;
+
+}
+
+.AdItem__card:hover {
+    background: #d2d2d2;
+}
+
+.AdItem__image {
+    margin-right: 1em;
+    width: 8rem;
+}
+
+.AdItem__content {
+    min-height: 8rem;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2em;
+}
+
+.AdItem__info {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 60%;
+    align-self: stretch;
+}
+
+.AdItem__info h2 {
+    font-size: 1.5rem;
+}
+
+.AdItem__info h3 {
+    font-size: 1.2rem;
+}
+.AdItem__info p {
+    margin-top: auto;
+    font-size: 1.2rem;
+}
+
+.AdItem__salary {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: flex-end;
+    align-self: stretch;
+    justify-content: space-between;
+}
+
+.AdItem__salary h2 {
+    align-self: flex-end;
+    font-size: 1.5rem;
+    color: #49a110;
+}
+

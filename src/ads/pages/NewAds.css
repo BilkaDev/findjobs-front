@@ -1,0 +1,18 @@
+.NewAds__form {
+    margin: 3rem auto;
+    padding: 1rem;
+    width: 90%;
+    max-width: 50rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 6px;
+    background-color: #fff;
+
+}
+
+.result-info{
+    padding: 1rem 2rem;
+}
+.result-info p{
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
