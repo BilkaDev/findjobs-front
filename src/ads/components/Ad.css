@@ -18,7 +18,6 @@
 .Ad{
     position: relative;
     margin: 1.5rem;
-    padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -79,6 +78,9 @@
 }
 .Ad__contact {
     margin-top: 1rem;
+}
+.Ad__contact > p{
+    margin-bottom: 1rem;
 }
 .AD__Button-back {
     position: absolute;

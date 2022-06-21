@@ -130,13 +130,14 @@ export const Ad = (props: Props) => {
                             ratione veniam vitae! Accusamus accusantium debitis distinctio, earum magni obcaecati.</p>
                         <div className="Ad__contact">
                             <p>Contact us: {email}</p>
+                            {(auth.isLoggedIn && creatorId === auth.userId) &&  <Button to={`/edit-ad/${id}`}>EDIT</Button>}
+                            <Button className="Ad__show-map" inverse onClick={openMapHandler}>View on map</Button>
+                            {(auth.isLoggedIn && creatorId === auth.userId) && <Button danger onClick={() => setShowConfirmModal(true)}>DELETE</Button>}
+                            {(creatorId !== auth.userId) && <Button href={`mailto: ${email}`}>APPLY</Button>}
                         </div>
                     </div>
 
-                    {(auth.isLoggedIn && creatorId === auth.userId) &&  <Button to={`/edit-ad/${id}`}>EDIT</Button>}
-                    <Button className="Ad__show-map" inverse onClick={openMapHandler}>View on map</Button>
-                    {(auth.isLoggedIn && creatorId === auth.userId) && <Button danger onClick={() => setShowConfirmModal(true)}>DELETE</Button>}
-                    {(auth.isLoggedIn && creatorId !== auth.userId) && <Button href={`mailto: ${email}`}>APPLY</Button>}
+
                 </div>
             </Card>
         </>
