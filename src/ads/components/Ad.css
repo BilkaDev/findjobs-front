@@ -1,3 +1,20 @@
+.Ad::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: transparent;
+}
+
+.Ad::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: transparent;
+}
+
+.Ad::-webkit-scrollbar-thumb
+{
+    background-color: #000000;
+    border: 2px solid #555555;
+}
 .Ad{
     position: relative;
     margin: 1.5rem;
@@ -6,7 +23,9 @@
     flex-direction: column;
     justify-content: flex-start;
     color: #000;
+    overflow-y:scroll;
 }
+
 
 .Ad__image{
     height: 8rem;
