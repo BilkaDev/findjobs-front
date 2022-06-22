@@ -1,3 +1,18 @@
+
+# Findjobs - backend
+## Application Description
+This is the client for the findjobs application.
+The application is used to search and add jobs. \
+
+view online: https://findjobs.bilka.networkmanager.pl \
+server source code: https://github.com/BilkaDev/findjobs-back
+
+## Technology:
+React - v18.1.0 \
+typescript - v4.6.4  \
+leaflet - v1.8.0 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
