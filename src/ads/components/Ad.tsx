@@ -11,6 +11,7 @@ import {ErrorModal} from "../../common/components/UiElement/ErrorModal";
 import {useNavigate} from "react-router-dom";
 import {LoadingSpinner} from "../../common/components/UiElement/LoadingSpinner";
 import './Ad.css';
+import {apiUrl} from "../../config/api";
 
 
 interface Props {
@@ -110,7 +111,7 @@ export const Ad = (props: Props) => {
             <Card className="Ad">
                 <Button className="AD__Button-back" onClick={()=> nav(-1)}>BACK</Button>
                 <div className="Ad__image">
-                    <LogoImage image={`http://localhost:3001/${image}`} name={name}/>
+                    <LogoImage image={`${apiUrl}/${image}`} name={name}/>
                 </div>
                 <div className="AdItem__content">
                     <div className="AdItem__info">
@@ -129,13 +130,14 @@ export const Ad = (props: Props) => {
                             ratione veniam vitae! Accusamus accusantium debitis distinctio, earum magni obcaecati.</p>
                         <div className="Ad__contact">
                             <p>Contact us: {email}</p>
+                            {(auth.isLoggedIn && creatorId === auth.userId) &&  <Button to={`/edit-ad/${id}`}>EDIT</Button>}
+                            <Button className="Ad__show-map" inverse onClick={openMapHandler}>View on map</Button>
+                            {(auth.isLoggedIn && creatorId === auth.userId) && <Button danger onClick={() => setShowConfirmModal(true)}>DELETE</Button>}
+                            {(creatorId !== auth.userId) && <Button href={`mailto: ${email}`}>APPLY</Button>}
                         </div>
                     </div>
 
-                    {(auth.isLoggedIn && creatorId === auth.userId) &&  <Button to={`/edit-ad/${id}`}>EDIT</Button>}
-                    <Button className="Ad__show-map" inverse onClick={openMapHandler}>View on map</Button>
-                    {(auth.isLoggedIn && creatorId === auth.userId) && <Button danger onClick={() => setShowConfirmModal(true)}>DELETE</Button>}
-                    {(auth.isLoggedIn && creatorId !== auth.userId) && <Button href={`mailto: ${email}`}>APPLY</Button>}
+
                 </div>
             </Card>
         </>

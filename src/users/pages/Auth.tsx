@@ -129,6 +129,11 @@ export const Auth = () => {
                         errorText="Please enter a valid password (at least 6 characters and max 25.)"
                         onInput={inputHandler}
                     />
+                    <div className="Auth__test">
+                        <p>User for test:</p>
+                        <p>Email: test123@gmail.com</p>
+                        <p>Password: test123</p>
+                    </div>
                     <Button type="submit" disabled={!formState.isValid}>{isLoginMode ? 'LOGIN' : 'SIGNUP'}</Button>
                 </form>
                 <Button inverse

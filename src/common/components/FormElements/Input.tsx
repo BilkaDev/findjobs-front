@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useEffect, useReducer} from 'react';
 import {validate, Validator} from "../../utils/validators";
-import "./Input.css"
+import "./Input.css";
 
 interface Props {
     initialValue?: string | number;
@@ -25,24 +25,28 @@ const InputReducer = (state: any, action: any) => {
                 ...state,
                 value: action.value,
                 isValid: validate(action.value, action.validators),
-            }
+            };
         case "TOUCH":
-            return {...state, isTouch: true}
+            return {...state, isTouch: true};
         default:
             return state;
     }
-}
+};
 
 
 export const Input = (props: Props) => {
-    const [inputState, dispatch] = useReducer(InputReducer, {value: props.initialValue || '', isValid: props.initialValid || false, isTouch: false})
+    const [inputState, dispatch] = useReducer(InputReducer, {
+        value: props.initialValue || '',
+        isValid: props.initialValid || false,
+        isTouch: false
+    });
 
     const {id, onInput} = props;
     const {value, isValid, isTouch} = inputState;
 
     useEffect(() => {
-        onInput(id, value, isValid)
-    }, [id, value, isValid])
+        onInput(id, value, isValid);
+    }, [id, value, isValid]);
 
     const changeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
@@ -50,13 +54,13 @@ export const Input = (props: Props) => {
             type: 'CHANGE',
             value: e.target.value,
             validators: props.validators,
-        })
-    }
+        });
+    };
     const touchHandler = () => {
         dispatch({
             type: 'TOUCH'
-        })
-    }
+        });
+    };
     const element = props.element === 'input' ? (
         <input
             type={props.type}
@@ -77,9 +81,9 @@ export const Input = (props: Props) => {
 
     return (
         <label className="Input__label">
-            {props.label}
+            <p>{props.label}</p>
             {element}
             {!isValid && isTouch && <p className="Input__error-text">{props.errorText}</p>}
         </label>
-    )
-}
+    );
+};
